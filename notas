@@ -1,0 +1,17 @@
+hay que documentar todos los archivos dentro de las carpetas y tambien el codexion.h
+
+hay  que quitar el fsanitize del makefile
+
+'valgrind --leak-check=full' para verificar los memory leaks y saber donde se encuentran para verificar los memory leaks y saber donde se encuentran
+
+Tengo que crear lo del scheduler mediante los heaps que aun desconozco
+
+Debo revisar que no tengo funciones, variables ni data (dentro de un struct) sin darles uso a lo largo de todo el programa. Por ejemplo creo que no uso el 'dongle->user' para nada para nada..
+
+Mirar como se ha hecho la conversion de gettimeofday() a miliseconds
+
+Ordenar por orden alfabetico todos los tipos de datos del struct
+
+ejecutable = './codexion 5 2000 300 200 150 3 50 fifo'
+
+Dejo el proyecto sin acabar por ponerme con el examen. Me he quedado con el problema de que tienen que compilar mas de un filosofo a la vez. Hay conversaciones interesantes con chat gpt pero las hay mejores con claude.
