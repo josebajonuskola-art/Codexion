@@ -38,7 +38,11 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 	} */
 	while (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
 	{
+		if (sim->is_finished == 1)
+			break;
 		request_verify(sim, coder);
+		if (sim->is_finished == 1)
+			break;
 		if (coder_process(coder->sim, coder) == 1)
 			continue ;
 		i++;
@@ -52,5 +56,6 @@ void	*init_coders_threads(void *value)
 
 	coder = (t_coder *)value;
 	run_coders(coder->sim, coder);
+	printf("Run coders terminado\n");
 	return (NULL);
 }

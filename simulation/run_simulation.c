@@ -25,20 +25,39 @@ long long	init_threads(t_simulation *simulation)
 	simulation->monitor = malloc(sizeof(t_monitor));
 	if (pthread_create(&simulation->monitor->monitor_thread, NULL,
 			init_monitoring, simulation) != 0)
-		return (0);
+		return (1);
 	while (i < simulation->config->number_of_coders)
 	{
 		if (pthread_create(&simulation->coders[i].coder_thread, NULL,
 				init_coders_threads, &simulation->coders[i]) != 0)
-			return (0);
+		{
+			printf("Mini error\n");
+			return (1);
+		}
+		printf("Termina el coder %d\n", i);
 		i++;
 	}
-	pthread_join(simulation->monitor->monitor_thread, NULL);
-	while (i--)
+/* 	while (i--)
 		pthread_join(simulation->coders[i].coder_thread, NULL);
-	return (1);
+	pthread_join(simulation->monitor->monitor_thread, NULL); */
+
+
+	printf("Printeo despues del segundo join\n");
+	return (0);
 }
 
+void	join_threads(t_simulation *sim)
+{
+	int i;
+
+	i = 0;
+	while (i < sim->config->number_of_coders)
+	{
+		pthread_join(sim->coders[i].coder_thread, NULL);
+		i++;
+	}
+	pthread_join(sim->monitor->monitor_thread, NULL);
+}
 // This function starts and runs the simulation, ensuring that the
 // required threads are created successfully.
 //
@@ -46,8 +65,12 @@ long long	init_threads(t_simulation *simulation)
 // used to create and manage the threads.
 int	run_simulation(t_simulation *simulation)
 {
-	if(init_threads(simulation) == 1)
+	if (init_threads(simulation) == 1)
+	{
+		printf("init_threads terminado\n");
 		return (1);
+	}
+	join_threads(simulation);
 	// if(init_threads(simulation) == 1)
 
 	//	return(1);

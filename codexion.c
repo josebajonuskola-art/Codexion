@@ -38,6 +38,8 @@ int	main(int argc, char **argv)
 		return (1);
 	sim = sim_creator(config);
 	run_simulation(sim);
+	printf("Simulacion terminada\n");
 	free(config);
 	sim_garbage_collector(sim);
+	return (0);
 }

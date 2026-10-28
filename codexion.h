@@ -186,6 +186,7 @@ void swapper(t_request *request_top, t_request *request_bottom);
 void init_mutex_destroy(int selector, int i, t_simulation *sim);
 void *init_monitoring(void *value);
 void *init_coders_threads(void *value);
+void join_threads(t_simulation *sim);
 void sim_garbage_collector(t_simulation *simulation);
 void request_verify(t_simulation *sim, t_coder *coder);
 void run_coders(t_simulation *sim, t_coder *coder);
