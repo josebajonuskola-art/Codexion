@@ -39,9 +39,17 @@ int	check_burnout(t_simulation *sim, int coder)
 
 int	check_compiles_done(t_simulation *sim, int coder)
 {
-	if (sim->coders[coder].n_compiles_done
-		!= sim->config->number_of_compiles_requiered)
-		return (0);
+	//printf("compiles_done\n");
+	int i;
+
+	i = 0;
+	while (i < sim->config->number_of_coders)
+	{
+		if (sim->coders[coder].n_compiles_done
+			!= sim->config->number_of_compiles_requiered)
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -62,7 +70,7 @@ void	*init_monitoring(void *value)
 		pthread_mutex_lock(&sim->simulation_mutex);
 		while (i < sim->config->number_of_coders)
 		{
-			if (check_burnout(sim, i) == 1 || check_compiles_done(sim, i) == 1)
+			if (check_burnout(sim, i) == 1 /* || check_compiles_done(sim, i) == 1 */)
 			{
 				sim->is_finished = 1;
 				printf("The simulation is finished\n");
