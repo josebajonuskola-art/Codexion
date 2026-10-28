@@ -38,23 +38,23 @@ int	non_value_checker(t_config *config)
 	int	error;
 
 	error = 0;
-	if(config->number_of_coders <= 0)
+	if (config->number_of_coders <= 0)
 		error = 1;
-	if(config->number_of_compiles_requiered <= 0)
+	if (config->number_of_compiles_requiered <= 0)
 		error = 1;
-	if(config->time_to_burnout <= 0)
+	if (config->time_to_burnout <= 0)
 		error = 1;
-	if(config->time_to_compile <= 0)
+	if (config->time_to_compile <= 0)
 		error = 1;
-	if(config->time_to_debug <= 0)
+	if (config->time_to_debug <= 0)
 		error = 1;
-	if(config->time_to_refactor <= 0)
+	if (config->time_to_refactor <= 0)
 		error = 1;
-	if(error == 1)
+	if (error == 1)
 	{
 		bigger_than_0_message();
 		usage_info_printer();
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }

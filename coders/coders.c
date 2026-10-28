@@ -19,33 +19,31 @@
 	long long actual_time;
 
 	actual_time = get_time_ms();
-	sim->coders->time_in_process = actual_time;
+	sim->coders->last_compile = actual_time;
 } */
 
 //change the name of the func
 void	run_coders(t_simulation *sim, t_coder *coder)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	coder_request(sim, coder);
-
-	//run_coders_first_time(sim, coder);
-	while (/*sim->is_finished == 0*/i < 5)
+	while (sim->is_finished == 0)
 	{
 		request_verify(sim, coder);
-		//coder = choose_coder(sim);
-		if(coder_process(coder->sim, coder) == 1)
-			continue;
+		if (coder_process(coder->sim, coder) == 1)
+			continue ;
 		i++;
 	}
+	//printf("Run coders terminado: coder %d\n", coder->n_coder);
 }
 
 void	*init_coders_threads(void *value)
 {
-	t_coder *coder;
+	t_coder	*coder;
 
 	coder = (t_coder *)value;
 	run_coders(coder->sim, coder);
-	return NULL;
+	return (NULL);
 }

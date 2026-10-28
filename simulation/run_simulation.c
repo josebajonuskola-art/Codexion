@@ -23,21 +23,20 @@ long long	init_threads(t_simulation *simulation)
 
 	i = 0;
 	simulation->monitor = malloc(sizeof(t_monitor));
-	if(pthread_create(&simulation->monitor->monitor_thread, NULL,
-		init_monitoring, simulation) != 0)
-	//here i may have to destroy the broken thread
-		return(1);
+	if (pthread_create(&simulation->monitor->monitor_thread, NULL,
+			init_monitoring, simulation) != 0)
+		return (0);
 	while (i < simulation->config->number_of_coders)
 	{
-		if(pthread_create(&simulation->coders[i].coder_thread, NULL,
-			init_coders_threads, &simulation->coders[i]) != 0)
-			return(1);
+		if (pthread_create(&simulation->coders[i].coder_thread, NULL,
+				init_coders_threads, &simulation->coders[i]) != 0)
+			return (0);
 		i++;
 	}
 	pthread_join(simulation->monitor->monitor_thread, NULL);
-	while(i--)
+	while (i--)
 		pthread_join(simulation->coders[i].coder_thread, NULL);
-	return(0);
+	return (1);
 }
 
 // This function starts and runs the simulation, ensuring that the
@@ -47,11 +46,12 @@ long long	init_threads(t_simulation *simulation)
 // used to create and manage the threads.
 int	run_simulation(t_simulation *simulation)
 {
-	init_threads(simulation);
+	if(init_threads(simulation) == 1)
+		return (1);
 	// if(init_threads(simulation) == 1)
 
 	//	return(1);
-	//else
+	// else
 	//	return(0);
-	return(0);
+	return (0);
 }

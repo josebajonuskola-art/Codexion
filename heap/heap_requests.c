@@ -14,31 +14,25 @@
 
 void	coder_request(t_simulation *sim, t_coder *coder)
 {
-	t_request request;
-	long long actual_time;
+	t_request	request;
+	long long	actual_time;
 
 	actual_time = get_time_ms();
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	request.coder = coder;
 	request.arrival_number = sim->arrival_counter;
 	sim->arrival_counter++;
-//The request.deadline_time must be rechecked laterer, by the moment i'll only
-//try to work the 'fifo'
-	request.time_remaining = actual_time - sim->coders->time_in_process;
+	request.time_remaining = actual_time - sim->coders->last_compile;
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	heap_adder(sim, request);
 }
 
 void	heap_adder(t_simulation *sim, t_request request)
 {
-	if(sim->config->scheduler == FIFO)
-	{
+	if (sim->config->scheduler == FIFO)
 		heap_add_fifo(sim, request);
-		print_heap(sim->heap);
-	}
 
 	else
 		printf("hello\n");
-	// all the 'edf' stuff;
+// all the 'edf' stuff;
 }
-

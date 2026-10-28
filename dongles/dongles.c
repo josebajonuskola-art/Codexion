@@ -18,22 +18,23 @@ int	usable_dongle(t_simulation *sim, t_dongle *dongle)
 
 	pthread_mutex_lock(&dongle->dongle_mutex);
 	actual_time = get_time_ms();
-	if(actual_time - dongle->cooldown_starting_time >= sim->config->dongle_cooldown)
+	if (actual_time - dongle->cooldown_starting_time
+		>= sim->config->dongle_cooldown)
 		dongle->is_chilled = 1;
 	else
 		dongle->is_chilled = 0;
-	if(dongle->is_connected == 1)
+	if (dongle->is_connected == 1)
 	{
 		pthread_mutex_unlock(&dongle->dongle_mutex);
-		return(0);
+		return (0);
 	}
-	if(dongle->is_chilled == 0)
+	if (dongle->is_chilled == 0)
 	{
 		pthread_mutex_unlock(&dongle->dongle_mutex);
-		return(0);
+		return (0);
 	}
 	pthread_mutex_unlock(&dongle->dongle_mutex);
-	return(1);
+	return (1);
 }
 
 void	use_dongles(t_coder *coder)

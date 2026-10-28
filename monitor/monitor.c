@@ -12,45 +12,68 @@
 
 #include "../codexion.h"
 
+void	wake_up_coders(t_simulation *sim)
+{
+	pthread_mutex_lock(&sim->heap->heap_mutex);
+	pthread_cond_broadcast(&sim->heap->heap_cond);
+	pthread_mutex_unlock(&sim->heap->heap_mutex);
+	printf("Inside wakeup\n");
+}
+
+int	check_burnout(t_simulation *sim, int coder)
+{
+	long long	actual_time;
+
+	actual_time = get_time_ms();
+	if (actual_time - sim->coders[coder].last_compile
+		>= sim->config->time_to_burnout)
+	{
+		printf("coder %d time without compile: %lld\n",
+			coder + 1, get_time_ms() - sim->coders[coder].last_compile);
+		printf("%lld %d burned out\n",
+			actual_time - sim->start_time, coder + 1);
+		return (1);
+	}
+	return (0);
+}
+
+int	check_compiles_done(t_simulation *sim, int coder)
+{
+	if (sim->coders[coder].n_compiles_done
+		!= sim->config->number_of_compiles_requiered)
+		return (0);
+	return (1);
+}
+
 // This function runs the monitor thread. The monitor checks whether
 // any coder has burned out and stops the simulation if that happens.
 //
 // The 'value' parameter is a pointer to the simulation structure.
 void	*init_monitoring(void *value)
 {
+	t_simulation	*sim;
+	int				i;
 
-	int i;
-	i = 2;
-	/*
-	int		compiles;
-	long long actual_time;
-	t_simulation *sim;
-
-	i = 1;
-	compiles = 0;
 	sim = (t_simulation *)value;
-
-	while(sim->is_finished != 1)
+	while (sim->is_finished != 1)
 	{
-		usleep(10000);
+		usleep(1000);
 		i = 0;
-		while(i < sim->config->number_of_coders)
+		pthread_mutex_lock(&sim->simulation_mutex);
+		while (i < sim->config->number_of_coders)
 		{
-			actual_time = get_time_ms();
-			if (compiles == sim->config->number_of_coders)
-				sim->is_finished = 1;
-			if(sim->coders[i].n_compiles_done == sim->config->number_of_compiles_requiered)
-				compiles++;
-			if(actual_time - sim->coders[i].time_in_process >= sim->config->time_to_burnout)
+			if (check_burnout(sim, i) == 1 || check_compiles_done(sim, i) == 1)
 			{
-				printf("a coder has been burnout\n");
 				sim->is_finished = 1;
+				printf("The simulation is finished\n");
+				pthread_mutex_unlock(&sim->simulation_mutex);
+				break;
 			}
 			i++;
 		}
-	}*/
-	while(i != 0)
-		i++;
-	return(value);
+		pthread_mutex_unlock(&sim->simulation_mutex);
+	}
+	printf("fuera del bucle\n");
+	wake_up_coders(sim);
+	return (NULL);
 }
-

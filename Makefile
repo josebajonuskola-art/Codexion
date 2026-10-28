@@ -17,23 +17,25 @@ CC = cc
 #I have to remove the '-g3' from the cflags
 CFLAGS = -g3 -Wall -Werror -Wextra
 
-SRCS =	codexion.c \
-	utils/additional_funcs.c \
-	utils/ft_itoa.c \
-	utils/garbage_collector.c \
-	parsing/parsing.c \
-	parsing/parsing_utils.c \
-	simulation/init_simulation.c \
-	simulation/run_simulation.c \
+SRCS =	codexion.c	\
+	utils/additional_funcs.c	\
+	utils/ft_itoa.c	\
+	utils/garbage_collector.c	\
+	parsing/parsing.c	\
+	parsing/parsing_utils.c	\
+	prints/prints.c	\
+	simulation/init_simulation.c	\
+	simulation/run_simulation.c	\
 	monitor/monitor.c	\
 	coders/coders.c		\
-	coders/coder_routine.c  \
-	scheduler/coder_choose.c \
-	scheduler/request_verify.c \
-	dongles/dongles.c \
-	heap/heap_funcs.c \
-	heap/heap_requests.c \
-	heap/init_heap.c \
+	coders/coder_routine.c	\
+	scheduler/coder_choose.c	\
+	scheduler/request_research.c	\
+	scheduler/request_verify.c	\
+	dongles/dongles.c	\
+	heap/heap_funcs.c	\
+	heap/heap_requests.c	\
+	heap/init_heap.c	\
 	heap/heap_util_funcs.c
 	
 
@@ -42,6 +44,7 @@ OBJS = $(SRCS:.c=.o)
 HEADERS = codexion.h
 
 all: $(NAME)
+	make clean
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)

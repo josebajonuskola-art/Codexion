@@ -22,7 +22,7 @@
 // of those arguments.
 int	main(int argc, char **argv)
 {
-	t_config	*config;
+	t_config		*config;
 	t_simulation	*sim;
 
 	if (argc != 9)
@@ -31,11 +31,11 @@ int	main(int argc, char **argv)
 		usage_info_printer();
 		return (1);
 	}
-	if(check_values(argv) == 1)
-		return(1);
+	if (check_values(argv) == 1)
+		return (1);
 	config = config_creator(argv);
-	if(non_value_checker(config) == 1)
-		return(1);
+	if (non_value_checker(config) == 1)
+		return (1);
 	sim = sim_creator(config);
 	run_simulation(sim);
 	free(config);
