@@ -31,7 +31,6 @@ void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 		sim->not_available_coders[sim->n_not_available_coders] = coder_request;
 		printf("The coder %d has been added to not available coders\n", sim->not_available_coders[sim->n_not_available_coders].coder->n_coder);
 		sim->n_not_available_coders++;
-
 	}
 
 }

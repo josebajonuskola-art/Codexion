@@ -36,7 +36,8 @@ SRCS =	codexion.c	\
 	heap/heap_funcs.c	\
 	heap/heap_requests.c	\
 	heap/init_heap.c	\
-	heap/heap_util_funcs.c
+	heap/heap_util_funcs.c	\
+	heap/heap_thread.c
 	
 
 OBJS = $(SRCS:.c=.o)

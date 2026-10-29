@@ -12,6 +12,14 @@
 
 #include "../codexion.h"
 
+int	usable_dongles(t_simulation *sim, t_coder *coder)
+{
+	if (usable_dongle(sim, coder->right_dongle) == 1
+		&& usable_dongle(sim, coder->left_dongle) == 1)
+		return (1);
+	return (0);
+}
+
 int	usable_dongle(t_simulation *sim, t_dongle *dongle)
 {
 	long long	actual_time;

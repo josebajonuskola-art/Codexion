@@ -52,6 +52,7 @@ int	init_coders(t_simulation *sim)
 		sim->coders[i].n_compiles_done = 0;
 		sim->coders[i].last_compile = get_time_ms();
 		sim->coders[i].actual_step = 0;
+		sim->coders[i].can_process = 0;
 		sim->coders[i].right_dongle = &sim->dongles[i];
 		sim->coders[i].sim = sim;
 		if (sim->config->number_of_coders == 1)
@@ -108,11 +109,17 @@ t_simulation	*sim_creator(t_config *config)
 {
 	t_simulation	*sim;
 
+	//Mallocs of available coders and not available coders arent done
 	sim = malloc(sizeof(t_simulation));
 	if (!sim)
 		return (NULL);
 	sim->config = config;
 	sim->is_finished = 0;
+	sim->n_available_coders = 0;
+	sim->n_not_available_coders = 0;
+	sim->available_coders = malloc(sizeof(t_request) * config->number_of_coders);
+	sim->not_available_coders = malloc(sizeof(t_request) * config->number_of_coders);
+
 	sim->dongles = malloc(sizeof(t_dongle) * config->number_of_coders);
 	if (!sim->dongles)
 		return (free(sim), NULL);
