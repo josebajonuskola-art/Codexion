@@ -18,5 +18,14 @@ Hay que hacer un mutex para el printf?
 
 Ejecutable = './codexion 5 2000 300 200 150 3 50 fifo'
 
+oct 29 14:37:
+git commit -m "He empezado a crear las dos listas, la de los coders que si que van a 
+compilar en esta ronda y la de los que no. De momento con 5 coders dos entran y tres no, 
+sin solapar ninguno de sus vecinos. Despues de esto, habra que empezar a hacer que esos 
+coders tengan las flags de can_process = 1 mediante la funcion comentada 
+'coder_runner_and_schedule_reseter'. La anterior funcion tambien se encargara de meter los no 
+availables de vuelta en el heap en su debido orden, ademas de borrar las listas para que en 
+la siguiente evaluacion se reseten."
+
 
 
