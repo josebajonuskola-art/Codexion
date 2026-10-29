@@ -55,7 +55,7 @@ void	*init_heap_thread(void *value)
 	int i;
 
 	sim = (t_simulation *)value;
-	i = 3;
+	i = 1;
 	//while (sim->is_finished != 1)
 	while(i--)
 	{

@@ -55,19 +55,24 @@ int	start_to_debug(t_simulation *sim, t_coder *coder)
 int	start_to_refactor(t_simulation *sim, t_coder *coder)
 {
 	t_request	last_request;
+	t_coder *actual_coder;
 
+	actual_coder = coder;
 	if (sim->is_finished == 1)
 		return (1);
 	printf("%lld %d is refactoring\n",
 		get_time_ms() - sim->start_time, coder->n_coder);
 	usleep(sim->config->time_to_refactor * 1000);
 	coder->actual_step = 0;
-	pthread_mutex_lock(&sim->heap->heap_mutex);
-	last_request.coder = coder;
+	last_request.coder = actual_coder;
 	last_request.arrival_number = sim->heap->size;
 	sim->arrival_counter++;
+	pthread_mutex_lock(&sim->heap->heap_mutex);
 	if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
+	{
 		heap_push(sim, last_request);
+		printf("Printeo antes del heap push\n");
+	}
 	pthread_cond_broadcast(&sim->heap->heap_cond);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
@@ -78,14 +83,13 @@ int	coder_process(t_simulation *sim, t_coder *coder)
 	if (coder->n_compiles_done == sim->config->number_of_compiles_requiered)
 		return (1);
 	pthread_mutex_lock(&coder->coder_mutex);
-	//pre_procces_time = get_time_ms();
-	if(start_to_compile(sim, coder) == 1)
+	if (start_to_compile(sim, coder) == 1)
 		return (1);
-	if(start_to_debug(sim, coder) == 1)
+	if (start_to_debug(sim, coder) == 1)
 		return (1);
-	if(start_to_refactor(sim, coder) == 1)
+	if (start_to_refactor(sim, coder) == 1)
 		return (1);
-	//procces_finish_time = get_time_ms();
 	pthread_mutex_unlock(&coder->coder_mutex);
+	printf("El coder ha terminado su proceso\n");
 	return (0);
 }
