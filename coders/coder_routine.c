@@ -18,14 +18,14 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 {
 	if (sim->is_finished == 1)
 		return (1);
-	pthread_mutex_lock(&sim->heap->heap_mutex);
+	//pthread_mutex_lock(&sim->heap->heap_mutex);
 	coder->last_compile = get_time_ms();
-	heap_pop(sim);
-	use_dongles(coder);
+	//heap_pop(sim);
+	//use_dongles(coder);
 	print_take_dongles(sim, coder);
 	printf("%lld %d is compiling\n",
 		get_time_ms() - sim->start_time, coder->n_coder);
-	pthread_mutex_unlock(&sim->heap->heap_mutex);
+	//pthread_mutex_unlock(&sim->heap->heap_mutex);
 	usleep(sim->config->time_to_compile * 1000);
 	pthread_mutex_lock(&coder->right_dongle->dongle_mutex);
 	coder->right_dongle->is_connected = 0;
@@ -48,7 +48,7 @@ int	start_to_debug(t_simulation *sim, t_coder *coder)
 		get_time_ms() - sim->start_time, coder->n_coder);
 	usleep(sim->config->time_to_debug * 1000);
 	coder->actual_step = 2;
-	pthread_mutex_unlock(&sim->dongles->dongle_mutex);
+	//pthread_mutex_unlock(&sim->dongles->dongle_mutex);
 	return (0);
 }
 
@@ -64,7 +64,7 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	coder->actual_step = 0;
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	last_request.coder = coder;
-	last_request.arrival_number = sim->arrival_counter;
+	last_request.arrival_number = sim->heap->size;
 	sim->arrival_counter++;
 	if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
 		heap_push(sim, last_request);

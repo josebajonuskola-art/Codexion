@@ -52,6 +52,7 @@ typedef struct s_heap
 	int capacity;
 	pthread_mutex_t heap_mutex;
 	pthread_cond_t heap_cond;
+	pthread_t heap_sorter_thread;
 } t_heap;
 
 // configuration
@@ -76,6 +77,7 @@ typedef struct s_coder
 	int n_coder;
 	int n_compiles_done;
 	int actual_step;
+	int can_process;
 
 	long long last_compile;
 
@@ -106,10 +108,17 @@ typedef struct s_dongle
 	pthread_mutex_t dongle_mutex;
 } t_dongle;
 
+typedef struct s_heap_sorter
+{
+	pthread_t heap_sorter_thread;
+} t_heap_sorter;
+
 // the struct used fot the simulation
 typedef struct s_simulation
 {
 	int is_finished;
+	int	n_available_coders;
+	int n_not_available_coders;
 	long long start_time;
 
 	t_coder *coders;
@@ -127,6 +136,11 @@ typedef struct s_simulation
 
 	t_monitor *monitor;
 
+	t_heap_sorter *heap_sorter;
+
+	t_request	*available_coders;
+	t_request *not_available_coders;
+
 	pthread_mutex_t print_mutex;
 	pthread_mutex_t simulation_mutex;
 
@@ -137,6 +151,8 @@ typedef struct s_monitor
 {
 	pthread_t monitor_thread;
 } t_monitor;
+
+
 
 // used functions
 int check_burnout(t_simulation *sim, int coder);
@@ -158,6 +174,7 @@ int start_to_debug(t_simulation *sim, t_coder *coder);
 int start_to_refactor(t_simulation *sim, t_coder *coder);
 int coder_process(t_simulation *sim, t_coder *coder);
 int usable_dongle(t_simulation *sim, t_dongle *dongle);
+int usable_dongles(t_simulation *sim, t_coder *coder);
 
 long long init_threads(t_simulation *simulation);
 long long get_smaller_time(t_simulation *sim, t_coder *coder);
@@ -170,9 +187,11 @@ char *ft_itoa(int n);
 size_t ft_strlcpy(char *dest, const char *src, size_t size);
 size_t ft_strlen(const char *str);
 
+void available_or_not_scheduler(t_simulation *sim, t_request coder_request);
 void wake_up_coders(t_simulation *sim);
 void usage_info_printer(void);
 void bigger_than_0_message(void);
+void coder_runner_and_schedule_reseter(t_simulation *sim);
 void heap_adder(t_simulation *sim, t_request request);
 void heap_adder_fifo(t_simulation *sim, t_request request);
 
@@ -186,6 +205,7 @@ void swapper(t_request *request_top, t_request *request_bottom);
 void init_mutex_destroy(int selector, int i, t_simulation *sim);
 void *init_monitoring(void *value);
 void *init_coders_threads(void *value);
+void *init_heap_thread(void *value);
 void join_threads(t_simulation *sim);
 void sim_garbage_collector(t_simulation *simulation);
 void request_verify(t_simulation *sim, t_coder *coder);
@@ -195,6 +215,7 @@ void check_and_grab_dongles(t_simulation *sim);
 void print_take_dongles(t_simulation *sim, t_coder *coder);
 void print_heap(t_heap *heap);
 void use_dongles(t_coder *coder);
+void *ft_memset(void *str, int c, size_t n);
 
 t_config *config_creator(char **argv);
 
