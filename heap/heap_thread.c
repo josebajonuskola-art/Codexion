@@ -17,7 +17,7 @@ void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 	t_coder *actual_coder;
 
 	actual_coder = coder_request.coder;
-	printf("inside the func\n");
+	//printf("inside the func\n");
 	if (usable_dongles(sim, actual_coder) == 1)
 	{
 		use_dongles(actual_coder);
@@ -78,7 +78,7 @@ void	*init_heap_thread(void *value)
 		pthread_mutex_lock(&sim->heap->heap_mutex);
 		while (sim->heap->size > 0)
 		{
-			printf("Inside the heap sorter\n");
+			//printf("Inside the heap sorter\n");
 
 			//printf("tercer loop debug1\n");
 			actual_coder = heap_pop(sim);
