@@ -29,13 +29,13 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 
 	i = 0;
 	coder_request(sim, coder);
-/* 	while (sim->is_finished == 0)
-	{
-		request_verify(sim, coder);
-		if (coder_process(coder->sim, coder) == 1)
-			continue ;
-		i++;
-	} */
+	/* 	while (sim->is_finished == 0)
+		{
+			request_verify(sim, coder);
+			if (coder_process(coder->sim, coder) == 1)
+				continue ;
+			i++;
+		} */
 	while (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
 	{
 		if (sim->is_finished == 1)

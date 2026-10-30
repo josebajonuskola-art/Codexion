@@ -25,6 +25,7 @@ void	coder_request(t_simulation *sim, t_coder *coder)
 	request.time_remaining = actual_time - sim->coders->last_compile;
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	heap_adder(sim, request);
+
 }
 
 void	heap_adder(t_simulation *sim, t_request request)

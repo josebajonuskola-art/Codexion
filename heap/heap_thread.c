@@ -41,8 +41,15 @@ void	coder_runner_and_schedule_reseter(t_simulation *sim)
 	int i;
 
 	i = 0;
+	//printf("Starting to run and schedule\n");
+	//printf("sim->n_available_coders : %d\n", sim->n_available_coders);
 	while (i < sim->n_available_coders)
+	{
 		sim->available_coders[i++].coder->can_process = 1;
+		/* printf("the coder %d, can_process: %d\n",
+			sim->available_coders[i - 1].coder->n_coder,
+			sim->available_coders[i - 1].coder->can_process); */
+	}
 	i = 0;
 	while (i < sim->n_not_available_coders)
 		heap_push(sim, sim->not_available_coders[i++]);
@@ -56,7 +63,7 @@ void	*init_heap_thread(void *value)
 
 	sim = (t_simulation *)value;
 	i = 1;
-	//while (sim->is_finished != 1)
+	// while (sim->is_finished != 1)
 	while(i--)
 	{
 		usleep(1000);
@@ -69,6 +76,7 @@ void	*init_heap_thread(void *value)
 			pthread_mutex_unlock(&sim->dongles->dongle_mutex);
 		}
 		coder_runner_and_schedule_reseter(sim);
+		//printf("coder and runner finished\n");
 		sim->n_available_coders = 0;
 		sim->n_not_available_coders = 0;
 	}
