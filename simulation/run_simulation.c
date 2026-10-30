@@ -82,10 +82,5 @@ int	run_simulation(t_simulation *simulation)
 	}
 	//printf("Entrando en el join_thread\n");
 	join_threads(simulation);
-	// if(init_threads(simulation) == 1)
-	//printf("join_threads finalizado\n");
-	//	return(1);
-	// else
-	//	return(0);
 	return (0);
 }
