@@ -42,13 +42,14 @@ long long	init_threads(t_simulation *simulation)
 	simulation->heap_sorter = malloc(sizeof(t_heap_sorter));
 	if (!simulation->heap_sorter)
 		return (1);
+	printf("Before initing heap_thread\n");
 	if (pthread_create(&simulation->heap_sorter->heap_sorter_thread, NULL,
-		init_heap_thread, simulation) != 0)
+					   init_heap_thread, simulation) != 0)
 		return (1);
 /* 	while (i--)
 		pthread_join(simulation->coders[i].coder_thread, NULL);
 	pthread_join(simulation->monitor->monitor_thread, NULL); */
-	//printf("Printeo despues del segundo join\n");
+
 	return (0);
 }
 
@@ -64,6 +65,8 @@ void	join_threads(t_simulation *sim)
 	}
 	pthread_join(sim->monitor->monitor_thread, NULL);
 	pthread_join(sim->heap_sorter->heap_sorter_thread, NULL);
+	printf("Printeo despues del ultimo join\n");
+
 }
 // This function starts and runs the simulation, ensuring that the
 // required threads are created successfully.

@@ -80,6 +80,9 @@ void	*init_heap_thread(void *value)
 		//printf("coder and runner finished\n");
 		sim->n_available_coders = 0;
 		sim->n_not_available_coders = 0;
+		if (sim->is_finished == 1)
+			break;
 	}
-	return (value);
+	printf("init_heap_thread loop finished\n");
+	return (NULL);
 }

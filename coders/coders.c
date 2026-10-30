@@ -12,17 +12,6 @@
 
 #include "../codexion.h"
 
-// This function initializes the time of the coder for getting burnout, before
-// the first compilation.
-/* void	run_coders_first_time(t_simulation *sim, t_coder *coder)
-{
-	long long actual_time;
-
-	actual_time = get_time_ms();
-	sim->coders->last_compile = actual_time;
-} */
-
-//change the name of the func
 void	run_coders(t_simulation *sim, t_coder *coder)
 {
 	int	i;
@@ -47,7 +36,7 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 			continue ;
 		i++;
 	}
-	//printf("Run coders terminado: coder %d\n", coder->n_coder);
+	printf("Run coders terminado: coder %d\n", coder->n_coder);
 }
 
 void	*init_coders_threads(void *value)
