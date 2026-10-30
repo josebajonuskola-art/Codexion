@@ -56,6 +56,6 @@ void	*init_coders_threads(void *value)
 
 	coder = (t_coder *)value;
 	run_coders(coder->sim, coder);
-	printf("Run coders terminado\n");
+	//printf("Run coders terminado\n");
 	return (NULL);
 }

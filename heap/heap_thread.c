@@ -21,16 +21,16 @@ void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 	{
 		use_dongles(actual_coder);
 		sim->available_coders[sim->n_available_coders] = coder_request;
-		printf("The coder %d has been added to available coders\n",
-			sim->available_coders[sim->n_available_coders].coder->n_coder);
+		/* printf("The coder %d has been added to available coders\n",
+			sim->available_coders[sim->n_available_coders].coder->n_coder); */
 		sim->n_available_coders++;
 
 	}
 	else
 	{
 		sim->not_available_coders[sim->n_not_available_coders] = coder_request;
-		printf("The coder %d has been added to not available coders\n",
-			sim->not_available_coders[sim->n_not_available_coders].coder->n_coder);
+		/* printf("The coder %d has been added to not available coders\n",
+			sim->not_available_coders[sim->n_not_available_coders].coder->n_coder); */
 		sim->n_not_available_coders++;
 	}
 
@@ -59,14 +59,14 @@ void	*init_heap_thread(void *value)
 {
 	t_simulation	*sim;
 	t_request actual_coder;
-	int i;
+	//int i;
 
 	sim = (t_simulation *)value;
-	i = 1;
-	// while (sim->is_finished != 1)
-	while(i--)
+	//i = 1;
+	while (sim->is_finished != 1)
+	//while(i--)
 	{
-		usleep(1000);
+		usleep(500);
 		pthread_mutex_lock(&sim->heap->heap_mutex);
 		while (sim->heap->size > 0)
 		{
@@ -76,6 +76,7 @@ void	*init_heap_thread(void *value)
 			pthread_mutex_unlock(&sim->dongles->dongle_mutex);
 		}
 		coder_runner_and_schedule_reseter(sim);
+		pthread_cond_broadcast(&sim->heap->heap_cond);
 		//printf("coder and runner finished\n");
 		sim->n_available_coders = 0;
 		sim->n_not_available_coders = 0;
