@@ -42,7 +42,7 @@ long long	init_threads(t_simulation *simulation)
 	simulation->heap_sorter = malloc(sizeof(t_heap_sorter));
 	if (!simulation->heap_sorter)
 		return (1);
-	printf("Before initing heap_thread\n");
+	//printf("Before initing heap_thread\n");
 	if (pthread_create(&simulation->heap_sorter->heap_sorter_thread, NULL,
 					   init_heap_thread, simulation) != 0)
 		return (1);
@@ -65,7 +65,7 @@ void	join_threads(t_simulation *sim)
 	}
 	pthread_join(sim->monitor->monitor_thread, NULL);
 	pthread_join(sim->heap_sorter->heap_sorter_thread, NULL);
-	printf("Printeo despues del ultimo join\n");
+	//printf("Printeo despues del ultimo join\n");
 
 }
 // This function starts and runs the simulation, ensuring that the
@@ -80,9 +80,10 @@ int	run_simulation(t_simulation *simulation)
 		//printf("init_threads terminado\n");
 		return (1);
 	}
+	//printf("Entrando en el join_thread\n");
 	join_threads(simulation);
 	// if(init_threads(simulation) == 1)
-
+	//printf("join_threads finalizado\n");
 	//	return(1);
 	// else
 	//	return(0);

@@ -17,7 +17,7 @@ void	wake_up_coders(t_simulation *sim)
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	pthread_cond_broadcast(&sim->heap->heap_cond);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
-	printf("Inside wakeup\n");
+	//printf("Inside wakeup\n");
 }
 
 int	check_burnout(t_simulation *sim, int coder)
@@ -28,8 +28,8 @@ int	check_burnout(t_simulation *sim, int coder)
 	if (actual_time - sim->coders[coder].last_compile
 		>= sim->config->time_to_burnout)
 	{
-		printf("coder %d time without compile: %lld\n",
-			coder + 1, get_time_ms() - sim->coders[coder].last_compile);
+		//printf("coder %d time without compile: %lld\n",
+		//	coder + 1, get_time_ms() - sim->coders[coder].last_compile);
 		printf("%lld %d burned out\n",
 			actual_time - sim->start_time, coder + 1);
 		return (1);
@@ -70,10 +70,10 @@ void	*init_monitoring(void *value)
 		pthread_mutex_lock(&sim->simulation_mutex);
 		while (i < sim->config->number_of_coders)
 		{
-			if (check_burnout(sim, i) == 1 /* || check_compiles_done(sim, i) == 1 */)
+			if (check_burnout(sim, i) == 1  || check_compiles_done(sim, i) == 1 )
 			{
 				sim->is_finished = 1;
-				printf("The simulation is finished\n");
+				//printf("The simulation is finished\n");
 				pthread_mutex_unlock(&sim->simulation_mutex);
 				break;
 			}
@@ -81,7 +81,7 @@ void	*init_monitoring(void *value)
 		}
 		pthread_mutex_unlock(&sim->simulation_mutex);
 	}
-	printf("fuera del bucle\n");
+	//printf("fuera del bucle\n");
 	wake_up_coders(sim);
 	return (NULL);
 }

@@ -36,7 +36,7 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 			continue ;
 		i++;
 	}
-	printf("Run coders terminado: coder %d\n", coder->n_coder);
+	//printf("Run coders terminado: coder %d\n", coder->n_coder);
 }
 
 void	*init_coders_threads(void *value)
@@ -46,5 +46,6 @@ void	*init_coders_threads(void *value)
 	coder = (t_coder *)value;
 	run_coders(coder->sim, coder);
 	//printf("Run coders terminado\n");
+	//printf("simulation is finished: %d\n", coder->sim->is_finished);
 	return (NULL);
 }

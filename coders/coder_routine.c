@@ -68,13 +68,13 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	last_request.coder = actual_coder;
 	last_request.arrival_number = sim->arrival_counter;
 	sim->arrival_counter++;
-	printf("Before heap_push if condition\n");
+	//printf("Before heap_push if condition\n");
 	if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
 	{
 		pthread_mutex_lock(&sim->heap->heap_mutex);
-		printf("Ready to heap_push\n");
+		//printf("Ready to heap_push\n");
 		heap_push(sim, last_request);
-		print_heap(sim->heap);
+		//print_heap(sim->heap);
 	}
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
