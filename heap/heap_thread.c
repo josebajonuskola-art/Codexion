@@ -17,7 +17,8 @@ void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 	t_coder *actual_coder;
 
 	actual_coder = coder_request.coder;
-	if (usable_dongles(sim, actual_coder) == 1)
+	if (usable_dongles(sim, actual_coder) == 1
+		&& actual_coder->n_compiles_done <= sim->config->number_of_compiles_requiered)
 	{
 		use_dongles(actual_coder);
 		sim->available_coders[sim->n_available_coders] = coder_request;

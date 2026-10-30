@@ -43,12 +43,12 @@ void	request_verify(t_simulation *sim, t_coder *coder)
 		//printf("Coder: %d ,Pre-broadcast\n", coder->n_coder);
 		/* deadline = get_smaller_time(sim, coder);
 		deadline_ms.tv_sec = deadline / 1000;
-		deadline_ms.tv_nsec = (deadline % 1000) * 1000000;
-		printf("El coder %d entra en el bucle del request_verify\n", coder->n_coder);
+		deadline_ms.tv_nsec = (deadline % 1000) * 1000000; */
+		/* printf("El coder %d entra en el bucle del request_verify\n", coder->n_coder);
 		if (deadline > get_time_ms())
 			pthread_cond_timedwait(&sim->heap->heap_cond,
-				&sim->heap->heap_mutex, &deadline_ms); */
-
+				&sim->heap->heap_mutex, &deadline_ms);
+ */
 		pthread_cond_wait(&sim->heap->heap_cond, &sim->heap->heap_mutex);
 		//printf("El coder %d, Post boradcast\n", coder->n_coder);
 	}
