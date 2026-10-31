@@ -78,8 +78,8 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 		heap_push(sim, last_request);
 		print_heap(sim->heap);
 	} */
-	//pthread_mutex_unlock(&sim->heap->heap_mutex);
 	heap_push(sim, last_request);
+	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
 }
 
