@@ -71,14 +71,14 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	//printf("Before heap_push if condition\n");
 	//printf("compiles_done: %d\n", coder->n_compiles_done);
 	//printf("Number of compiles requiered: %d\n", sim->config->number_of_compiles_requiered);
-	/* if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
-	{
+	if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
+		heap_push(sim, last_request);
+	/*{
 		//pthread_mutex_lock(&sim->heap->heap_mutex);
 		//printf("Ready to heap_push\n");
 		heap_push(sim, last_request);
 		print_heap(sim->heap);
 	} */
-	heap_push(sim, last_request);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
 }
@@ -89,11 +89,11 @@ int	coder_process(t_simulation *sim, t_coder *coder)
 		return (1);
 	pthread_mutex_lock(&coder->coder_mutex);
 	if (start_to_compile(sim, coder) == 1)
-		return (1);
+		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
 	if (start_to_debug(sim, coder) == 1)
-		return (1);
+		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
 	if (start_to_refactor(sim, coder) == 1)
-		return (1);
+		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
 	coder->can_process = 0;
 	pthread_mutex_unlock(&coder->coder_mutex);
 	//print_heap(sim->heap);

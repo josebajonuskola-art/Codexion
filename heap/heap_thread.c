@@ -67,20 +67,20 @@ void	*init_heap_thread(void *value)
 	while (sim->is_finished != 1)
 	//while(i--)
 	{
-		usleep(500);
+		usleep(10);
 		pthread_mutex_lock(&sim->heap->heap_mutex);
 		while (sim->heap->size > 0)
 		{
 			actual_coder = heap_pop(sim);
-			pthread_mutex_unlock(&sim->heap->heap_mutex);
 			available_or_not_scheduler(sim, actual_coder);
-			pthread_mutex_unlock(&sim->dongles->dongle_mutex);
+			//pthread_mutex_unlock(&sim->dongles->dongle_mutex);
 		}
 		coder_runner_and_schedule_reseter(sim);
 		pthread_cond_broadcast(&sim->heap->heap_cond);
 		//printf("coder and runner finished\n");
 		sim->n_available_coders = 0;
 		sim->n_not_available_coders = 0;
+		pthread_mutex_unlock(&sim->heap->heap_mutex);
 		if (sim->is_finished == 1)
 			break;
 	}

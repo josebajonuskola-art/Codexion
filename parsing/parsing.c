@@ -78,7 +78,8 @@ int	check_values(char **argv)
 	i = 1;
 	if (strcmp(argv[1], "1") == 0)
 	{
-		printf("ERROR: The program should have more than one coder.\n");
+		printf("0 1 has taken a dongle\n");
+		printf("%s 1 burned out\n", argv[2]);
 		return (1);
 	}
 	while (i < 8)
