@@ -26,7 +26,7 @@ int	has_to_heapify(t_simulation *sim,
 		&& request_top->arrival_number < request_bottom->arrival_number)
 		return (1);
 	else if (sim->config->scheduler
-		== EDF && request_top->time_remaining > request_bottom->time_remaining)
+		== EDF && request_top->time_remaining < request_bottom->time_remaining)
 		return (1);
 	else
 		return (0);

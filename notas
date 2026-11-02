@@ -14,7 +14,9 @@ Poner comentarios en todas las funciones para que el codigo se mas legible.
 
 Ordenar por orden alfabetico todos los tipos de datos del struct
 
-Hay que hacer un mutex para el printf?
+Hay que hacer el edf, creo que el archivo coder_choose se puede borrar, creo que request_research tambien
+
+El programa se tiene que acabar cuando el ultimo coder termina de codear
 
 Ejecutable = './codexion 5 2000 300 200 150 3 50 fifo'
 

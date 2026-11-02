@@ -119,7 +119,6 @@ t_simulation	*sim_creator(t_config *config)
 	sim->n_not_available_coders = 0;
 	sim->available_coders = malloc(sizeof(t_request) * config->number_of_coders);
 	sim->not_available_coders = malloc(sizeof(t_request) * config->number_of_coders);
-
 	sim->dongles = malloc(sizeof(t_dongle) * config->number_of_coders);
 	if (!sim->dongles)
 		return (free(sim), NULL);

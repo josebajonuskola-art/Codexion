@@ -190,8 +190,6 @@ void wake_up_coders(t_simulation *sim);
 void usage_info_printer(void);
 void bigger_than_0_message(void);
 void coder_runner_and_schedule_reseter(t_simulation *sim);
-void heap_adder(t_simulation *sim, t_request request);
-void heap_adder_fifo(t_simulation *sim, t_request request);
 
 void heap_push(t_simulation *sim, t_request request);
 void heap_add_fifo(t_simulation *sim, t_request request);

@@ -12,7 +12,7 @@
 
 #include "../codexion.h"
 
-t_coder	*choose_coder(t_simulation *sim)
+/* t_coder	*choose_coder(t_simulation *sim)
 {
 	t_coder	*coder;
 
@@ -57,3 +57,4 @@ t_coder	*choose_coder_edf(t_simulation *sim)
 	}
 	return (coder);
 }
+ */

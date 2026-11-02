@@ -12,13 +12,6 @@
 
 #include "../codexion.h"
 
-void	heap_add_fifo(t_simulation *sim, t_request request)
-{
-	pthread_mutex_lock(&sim->heap->heap_mutex);
-	sim->heap->requests[sim->heap->size] = request;
-	sim->heap->size++;
-	pthread_mutex_unlock(&sim->heap->heap_mutex);
-}
 
 void	heap_push(t_simulation *sim, t_request request)
 {

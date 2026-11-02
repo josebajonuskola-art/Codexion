@@ -22,18 +22,8 @@ void	coder_request(t_simulation *sim, t_coder *coder)
 	request.coder = coder;
 	request.arrival_number = sim->arrival_counter;
 	sim->arrival_counter++;
-	request.time_remaining = actual_time - sim->coders->last_compile;
+	request.time_remaining = actual_time + sim->config->time_to_burnout;
+	sim->heap->requests[sim->heap->size] = request;
+	sim->heap->size++;
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
-	heap_adder(sim, request);
-
-}
-
-void	heap_adder(t_simulation *sim, t_request request)
-{
-	if (sim->config->scheduler == FIFO)
-		heap_add_fifo(sim, request);
-
-	else
-		printf("hello\n");
-// all the 'edf' stuff;
 }
