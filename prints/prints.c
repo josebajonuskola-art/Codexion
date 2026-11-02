@@ -12,7 +12,25 @@
 
 #include "../codexion.h"
 
-void print_take_dongles(t_simulation *sim, t_coder *coder)
+void	print_process(t_simulation *sim, t_coder *coder, int status)
+{
+
+	pthread_mutex_lock(&sim->print_mutex);
+	if (sim->is_finished == 0)
+	{
+		if (status == 0)
+			print_start_to_compile(sim, coder);
+		else if (status == 1)
+			printf("%lld %d is debugging\n",
+				get_time_ms() - sim->start_time, coder->n_coder);
+		else
+			printf("%lld %d is refactoring\n",
+				get_time_ms() - sim->start_time, coder->n_coder);
+	}
+	pthread_mutex_unlock(&sim->print_mutex);
+}
+
+void print_start_to_compile(t_simulation *sim, t_coder *coder)
 {
 	long long	actual_time;
 
@@ -20,6 +38,8 @@ void print_take_dongles(t_simulation *sim, t_coder *coder)
 	printf("%lld %d has taken a dongle\n",
 		actual_time, coder->n_coder);
 	printf("%lld %d has taken a dongle\n",
+		actual_time, coder->n_coder);
+	printf("%lld %d is compiling\n",
 		actual_time, coder->n_coder);
 }
 

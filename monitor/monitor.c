@@ -28,8 +28,10 @@ int	check_burnout(t_simulation *sim, int coder)
 	if (actual_time - sim->coders[coder].last_compile
 		>= sim->config->time_to_burnout)
 	{
+		pthread_mutex_lock(&sim->print_mutex);
 		printf("%lld %d burned out\n",
 			actual_time - sim->start_time, coder + 1);
+		pthread_mutex_unlock(&sim->print_mutex);
 		return (1);
 	}
 	return (0);

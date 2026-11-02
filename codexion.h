@@ -117,7 +117,7 @@ typedef struct s_heap_sorter
 typedef struct s_simulation
 {
 	int is_finished;
-	int	n_available_coders;
+	int n_available_coders;
 	int n_not_available_coders;
 	long long start_time;
 
@@ -138,7 +138,7 @@ typedef struct s_simulation
 
 	t_heap_sorter *heap_sorter;
 
-	t_request	*available_coders;
+	t_request *available_coders;
 	t_request *not_available_coders;
 
 	pthread_mutex_t print_mutex;
@@ -151,8 +151,6 @@ typedef struct s_monitor
 {
 	pthread_t monitor_thread;
 } t_monitor;
-
-
 
 // used functions
 int check_burnout(t_simulation *sim, int coder);
@@ -212,7 +210,8 @@ void request_verify(t_simulation *sim, t_coder *coder);
 void run_coders(t_simulation *sim, t_coder *coder);
 void coder_request(t_simulation *sim, t_coder *coder);
 void check_and_grab_dongles(t_simulation *sim);
-void print_take_dongles(t_simulation *sim, t_coder *coder);
+void print_process(t_simulation *sim, t_coder *coder, int status);
+void print_start_to_compile(t_simulation *sim, t_coder *coder);
 void print_heap(t_heap *heap);
 void use_dongles(t_coder *coder);
 void *ft_memset(void *str, int c, size_t n);
@@ -226,7 +225,6 @@ t_coder *choose_coder_fifo(t_simulation *sim);
 t_coder *choose_coder_edf(t_simulation *sim);
 t_coder *find_left_neighbour(t_simulation *sim, t_coder *coder);
 t_coder *find_right_neighbour(t_simulation *sim, t_coder *coder);
-
 
 t_request *find_request(t_simulation *sim, t_coder *coder);
 t_request heap_pop(t_simulation *sim);
