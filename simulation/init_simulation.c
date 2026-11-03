@@ -26,7 +26,7 @@ void	init_mutex_destroy(int selector, int i, t_simulation *sim)
 		while (i--)
 			pthread_mutex_destroy(&sim->coders[i].coder_mutex);
 	}
-	else if (selector == 1)
+	if (selector == 1)
 	{
 		while (i--)
 			pthread_mutex_destroy(&sim->dongles[i].dongle_mutex);

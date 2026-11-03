@@ -16,8 +16,10 @@
 
 int	start_to_compile(t_simulation *sim, t_coder *coder)
 {
+	pthread_mutex_lock(&sim->simulation_mutex);
 	if (sim->is_finished == 1)
-		return (1);
+		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
+	pthread_mutex_unlock(&sim->simulation_mutex);
 	coder->last_compile = get_time_ms();
 	print_process(sim, coder, 0);
 	usleep(sim->config->time_to_compile * 1000);
@@ -39,8 +41,10 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 
 int	start_to_debug(t_simulation *sim, t_coder *coder)
 {
+	pthread_mutex_lock(&sim->simulation_mutex);
 	if (sim->is_finished == 1)
-		return (1);
+		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
+	pthread_mutex_unlock(&sim->simulation_mutex);
 	print_process(sim, coder, 1);
 	usleep(sim->config->time_to_debug * 1000);
 	coder->actual_step = 2;
@@ -53,19 +57,24 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	t_coder *actual_coder;
 
 	actual_coder = coder;
+	pthread_mutex_lock(&sim->simulation_mutex);
 	if (sim->is_finished == 1)
-		return (1);
+		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
+	pthread_mutex_unlock(&sim->simulation_mutex);
 	print_process(sim, coder, 2);
 	usleep(sim->config->time_to_refactor * 1000);
 	coder->actual_step = 0;
 	last_request.coder = actual_coder;
+	pthread_mutex_lock(&sim->simulation_mutex);//This lock is new
 	last_request.arrival_number = sim->arrival_counter;
 	last_request.time_remaining = coder->last_compile
 		+ sim->config->time_to_burnout;
 	sim->arrival_counter++;
+	pthread_mutex_unlock(&sim->simulation_mutex);//This unlock is new aldso
+	pthread_mutex_lock(&sim->heap->heap_mutex);//This lock is new
 	if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
 		heap_push(sim, last_request);
-	//pthread_mutex_unlock(&sim->heap->heap_mutex);
+	pthread_mutex_unlock(&sim->heap->heap_mutex);//This unlocs is new
 	return (0);
 }
 
