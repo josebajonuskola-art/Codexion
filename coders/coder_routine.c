@@ -57,13 +57,16 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	usleep(sim->config->time_to_refactor * 1000);
 	coder->actual_step = 0;
 	last_request.coder = actual_coder;
+	pthread_mutex_lock(&sim->simulation_mutex);
 	last_request.arrival_number = sim->arrival_counter;
 	last_request.time_remaining = coder->last_compile
 		+ sim->config->time_to_burnout;
 	sim->arrival_counter++;
+	pthread_mutex_unlock(&sim->simulation_mutex);
+	pthread_mutex_lock(&sim->heap->heap_mutex);
 	if (coder->n_compiles_done < sim->config->number_of_compiles_requiered)
 		heap_push(sim, last_request);
-	//pthread_mutex_unlock(&sim->heap->heap_mutex);
+	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
 }
 
