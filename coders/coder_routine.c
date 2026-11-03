@@ -31,7 +31,9 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 	pthread_mutex_unlock(&coder->left_dongle->dongle_mutex);
 	coder->actual_step = 1;
 	coder->n_compiles_done += 1;
+	pthread_mutex_lock(&sim->heap->heap_mutex);
 	pthread_cond_broadcast(&sim->heap->heap_cond);
+	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
 }
 

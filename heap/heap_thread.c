@@ -56,7 +56,7 @@ void	*init_heap_thread(void *value)
 	while (sim->is_finished != 1)
 	//while(i--)
 	{
-		usleep(10);
+		usleep(500);
 		pthread_mutex_lock(&sim->heap->heap_mutex);
 		while (sim->heap->size > 0)
 		{
