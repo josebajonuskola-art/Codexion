@@ -72,6 +72,5 @@ void	*init_heap_thread(void *value)
 		if (sim->is_finished == 1)
 			break;
 	}
-	//printf("init_heap_thread loop finished\n");
 	return (NULL);
 }

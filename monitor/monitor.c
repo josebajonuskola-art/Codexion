@@ -17,7 +17,6 @@ void	wake_up_coders(t_simulation *sim)
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	pthread_cond_broadcast(&sim->heap->heap_cond);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
-	//printf("Inside wakeup\n");
 }
 
 int	check_burnout(t_simulation *sim, int coder)

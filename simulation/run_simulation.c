@@ -65,8 +65,6 @@ void	join_threads(t_simulation *sim)
 	}
 	pthread_join(sim->monitor->monitor_thread, NULL);
 	pthread_join(sim->heap_sorter->heap_sorter_thread, NULL);
-	//printf("Printeo despues del ultimo join\n");
-
 }
 // This function starts and runs the simulation, ensuring that the
 // required threads are created successfully.
