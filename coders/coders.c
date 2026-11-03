@@ -24,7 +24,7 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 		if (sim->is_finished == 1)
 			break;
 		if (coder_process(coder->sim, coder) == 1)
-			continue ;
+			break ;
 	}
 }
 

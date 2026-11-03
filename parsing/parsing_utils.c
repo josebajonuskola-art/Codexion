@@ -16,8 +16,8 @@
 // running the program.
 void	usage_info_printer(void)
 {
-	printf("The output should look like the next one:\n");
-	printf("codexion.c 1 23 40 42 6 1 7 fifo\n");
+	printf("The input should look like the next one:\n");
+	printf("./codexion 5 5000 100 100 100 1 50 fifo\n");
 }
 
 // This function prints an error message indicating that the

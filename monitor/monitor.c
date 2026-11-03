@@ -44,7 +44,7 @@ int	check_compiles_done(t_simulation *sim)
 	while (i < sim->config->number_of_coders)
 	{
 		if (sim->coders[i].n_compiles_done
-			!= sim->config->number_of_compiles_requiered)
+			< sim->config->number_of_compiles_requiered)
 			return (0);
 		i++;
 	}
