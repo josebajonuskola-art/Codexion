@@ -34,6 +34,7 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	pthread_cond_broadcast(&sim->heap->heap_cond);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
+	
 	return (0);
 }
 
