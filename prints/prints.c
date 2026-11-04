@@ -16,7 +16,7 @@ void	print_process(t_simulation *sim, t_coder *coder, int status)
 {
 
 	pthread_mutex_lock(&sim->print_mutex);
-	if (sim->is_finished == 0)
+	if (sim_is_finished(sim) == 0)
 	{
 		if (status == 0)
 			print_start_to_compile(sim, coder);

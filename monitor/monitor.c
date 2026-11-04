@@ -74,18 +74,17 @@ void	*init_monitoring(void *value)
 	{
 		usleep(1000);
 		i = 0;
-		pthread_mutex_lock(&sim->simulation_mutex);
 		while (i < sim->config->number_of_coders)
 		{
 			if (check_burnout(sim, i) == 1  || check_compiles_done(sim) == 1 )
 			{
+				pthread_mutex_lock(&sim->simulation_mutex);
 				sim->is_finished = 1;
 				pthread_mutex_unlock(&sim->simulation_mutex);
 				return (NULL);
 			}
 			i++;
 		}
-		pthread_mutex_unlock(&sim->simulation_mutex);
 	}
 	wake_up_coders(sim);
 	return (NULL);

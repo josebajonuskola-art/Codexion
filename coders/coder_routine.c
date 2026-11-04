@@ -16,10 +16,8 @@
 
 int	start_to_compile(t_simulation *sim, t_coder *coder)
 {
-	pthread_mutex_lock(&sim->simulation_mutex);
-	if (sim->is_finished == 1)
-		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
-	pthread_mutex_unlock(&sim->simulation_mutex);
+	if (sim_is_finished(sim) == 1)
+		return (1);
 	pthread_mutex_lock(&coder->coder_mutex);
 	coder->last_compile = get_time_ms();
 	pthread_mutex_unlock(&coder->coder_mutex);
@@ -45,10 +43,8 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 
 int	start_to_debug(t_simulation *sim, t_coder *coder)
 {
-	pthread_mutex_lock(&sim->simulation_mutex);
-	if (sim->is_finished == 1)
-		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
-	pthread_mutex_unlock(&sim->simulation_mutex);
+	if (sim_is_finished(sim) == 1)
+		return (1);
 	print_process(sim, coder, 1);
 	usleep(sim->config->time_to_debug * 1000);
 	pthread_mutex_lock(&coder->coder_mutex);
@@ -63,10 +59,8 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	t_coder *actual_coder;
 
 	actual_coder = coder;
-	pthread_mutex_lock(&sim->simulation_mutex);
-	if (sim->is_finished == 1)
-		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
-	pthread_mutex_unlock(&sim->simulation_mutex);
+	if (sim_is_finished(sim) == 1)
+		return (1);
 	print_process(sim, coder, 2);
 	usleep(sim->config->time_to_refactor * 1000);
 	pthread_mutex_lock(&coder->coder_mutex);
