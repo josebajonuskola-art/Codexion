@@ -6,7 +6,7 @@
 #    By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/15 14:05:39 by juskola-          #+#    #+#              #
-#    Updated: 2026/08/03 21:48:31 by juskola-         ###   ########.fr        #
+#    Updated: 2026/11/04 13:02:17 by juskola-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = codexion
 CC = cc
 
 #I have to remove the '-g3' from the cflags
-CFLAGS = -g3 -Wall -Werror -Wextra
+CFLAGS = -g3 -Wall -Werror -Wextra -pthread
 
 SRCS =	codexion.c	\
 	utils/additional_funcs.c	\

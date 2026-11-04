@@ -18,10 +18,10 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 	coder_request(sim, coder);
 	while (sim_is_finished(sim) == 0)
 	{
-		if (sim->is_finished == 1)
+		if (sim_is_finished(sim) == 1)
 			break;
 		request_verify(sim, coder);
-		if (sim->is_finished == 1)
+		if (sim_is_finished(sim) == 1)
 			break;
 		if (coder_process(coder->sim, coder) == 1)
 			break ;
