@@ -79,6 +79,7 @@ int	check_values(char **argv)
 	if (strcmp(argv[1], "1") == 0)
 	{
 		printf("0 1 has taken a dongle\n");
+		usleep(ft_atoi(argv[2]) * 1000);
 		printf("%s 1 burned out\n", argv[2]);
 		return (1);
 	}

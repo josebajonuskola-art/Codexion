@@ -157,6 +157,7 @@ int check_burnout(t_simulation *sim, int coder);
 int check_compiles_done(t_simulation *sim);
 int check_values(char **argv);
 int check_num_format(char *argv);
+int ft_atoi(const char *str);
 int has_better_neighbours(t_simulation *sim, t_coder *coder);
 int non_value_checker(t_config *config);
 int is_heap_top(t_simulation *sim, t_coder *coder);

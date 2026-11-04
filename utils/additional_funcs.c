@@ -99,3 +99,28 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (new);
 }
 
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	count;
+	int	nb;
+
+	count = 1;
+	nb = 0;
+	i = 0;
+	while ((str[i] == ' ') || (str[i] == '\t') || (str[i] == '\n')
+		|| (str[i] == '\r') || (str[i] == '\v') || (str[i] == '\f'))
+		i++;
+	if ((str[i] == '-') || (str[i] == '+'))
+	{
+		if (str[i] == '-')
+			count *= -1;
+		i++;
+	}
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		nb = nb * 10 + str[i] - '0';
+		i++;
+	}
+	return (nb * count);
+}
