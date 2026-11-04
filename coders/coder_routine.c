@@ -20,7 +20,9 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 	if (sim->is_finished == 1)
 		return (pthread_mutex_unlock(&sim->simulation_mutex), 1);
 	pthread_mutex_unlock(&sim->simulation_mutex);
+	pthread_mutex_lock(&coder->coder_mutex);
 	coder->last_compile = get_time_ms();
+	pthread_mutex_unlock(&coder->coder_mutex);
 	print_process(sim, coder, 0);
 	usleep(sim->config->time_to_compile * 1000);
 	pthread_mutex_lock(&coder->right_dongle->dongle_mutex);
@@ -31,8 +33,10 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 	coder->left_dongle->is_connected = 0;
 	coder->left_dongle->cooldown_starting_time = get_time_ms();
 	pthread_mutex_unlock(&coder->left_dongle->dongle_mutex);
+	pthread_mutex_lock(&coder->coder_mutex);
 	coder->actual_step = 1;
 	coder->n_compiles_done += 1;
+	pthread_mutex_unlock(&coder->coder_mutex);
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	pthread_cond_broadcast(&sim->heap->heap_cond);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
@@ -47,7 +51,9 @@ int	start_to_debug(t_simulation *sim, t_coder *coder)
 	pthread_mutex_unlock(&sim->simulation_mutex);
 	print_process(sim, coder, 1);
 	usleep(sim->config->time_to_debug * 1000);
+	pthread_mutex_lock(&coder->coder_mutex);
 	coder->actual_step = 2;
+	pthread_mutex_unlock(&coder->coder_mutex);
 	return (0);
 }
 
@@ -63,7 +69,9 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	pthread_mutex_unlock(&sim->simulation_mutex);
 	print_process(sim, coder, 2);
 	usleep(sim->config->time_to_refactor * 1000);
+	pthread_mutex_lock(&coder->coder_mutex);
 	coder->actual_step = 0;
+	pthread_mutex_unlock(&coder->coder_mutex);
 	last_request.coder = actual_coder;
 	pthread_mutex_lock(&sim->simulation_mutex);
 	last_request.arrival_number = sim->arrival_counter;
@@ -80,15 +88,15 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 
 int	coder_process(t_simulation *sim, t_coder *coder)
 {
-	pthread_mutex_lock(&coder->coder_mutex);
+
 	if (start_to_compile(sim, coder) == 1)
-		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
 	if (coder->n_compiles_done == sim->config->number_of_compiles_requiered)
-		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
 	if (start_to_debug(sim, coder) == 1)
-		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
 	if (start_to_refactor(sim, coder) == 1)
-		return (pthread_mutex_unlock(&coder->coder_mutex), 1);
-	pthread_mutex_unlock(&coder->coder_mutex);
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+	/* pthread_mutex_unlock(&coder->coder_mutex); */
 	return (0);
 }
