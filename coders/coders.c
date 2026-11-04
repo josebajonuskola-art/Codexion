@@ -16,7 +16,7 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 {
 
 	coder_request(sim, coder);
-	while (sim->is_finished == 0)
+	while (sim_is_finished(sim) == 0)
 	{
 		if (sim->is_finished == 1)
 			break;
