@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   simulation_util_funcs.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/29 13:01:12 by juskola-          #+#    #+#             */
-/*   Updated: 2026/10/29 13:01:44 by juskola-         ###   ########.fr       */
+/*   Created: 2026/11/04 11:59:27 by juskola-          #+#    #+#             */
+/*   Updated: 2026/11/04 11:59:45 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
-void	*ft_memset(void *str, int c, size_t n)
+long long	get_time_ms(void)
 {
-	size_t			i;
-	unsigned char	*temp;
+	struct timeval	tv;
 
-	i = 0;
-	temp = (unsigned char *)str;
-	while (i < n)
-	{
-		temp[i] = (unsigned char) c;
-		i++;
-	}
-	return (str);
+	if (gettimeofday(&tv, NULL) != 0)
+		return (0);
+	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000));
+}
+
+int sim_is_finished(t_simulation *sim)
+{
+	int is_finished;
+
+	is_finished = 0;
+	pthread_mutex_lock(&sim->simulation_mutex);
+	if (sim->is_finished == 1)
+		is_finished = 1;
+	pthread_mutex_unlock(&sim->simulation_mutex);
+	return (is_finished);
 }

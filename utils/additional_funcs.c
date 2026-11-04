@@ -99,11 +99,3 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (new);
 }
 
-long long	get_time_ms(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL) != 0)
-		return (0);
-	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000));
-}

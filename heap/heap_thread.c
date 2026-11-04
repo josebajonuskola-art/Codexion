@@ -53,7 +53,7 @@ void	*init_heap_thread(void *value)
 	t_request actual_coder;
 
 	sim = (t_simulation *)value;
-	while (sim->is_finished != 1)
+	while (sim_is_finished(sim) != 1)
 	{
 		usleep(500);
 		pthread_mutex_lock(&sim->heap->heap_mutex);

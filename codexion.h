@@ -167,6 +167,7 @@ int init_heap(t_simulation *sim);
 int run_simulation(t_simulation *simulation);
 int has_to_heapify(t_simulation *sim,
 				   t_request *request_top, t_request *request_bottom);
+int sim_is_finished(t_simulation *sim);
 int start_to_compile(t_simulation *sim, t_coder *coder);
 int start_to_debug(t_simulation *sim, t_coder *coder);
 int start_to_refactor(t_simulation *sim, t_coder *coder);

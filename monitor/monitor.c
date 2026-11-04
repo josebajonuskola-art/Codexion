@@ -69,7 +69,7 @@ void	*init_monitoring(void *value)
 	int				i;
 
 	sim = (t_simulation *)value;
-	while (sim->is_finished != 1)
+	while (sim_is_finished(sim) != 1)
 	{
 		usleep(1000);
 		i = 0;

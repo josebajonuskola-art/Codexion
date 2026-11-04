@@ -26,6 +26,7 @@ SRCS =	codexion.c	\
 	prints/prints.c	\
 	simulation/init_simulation.c	\
 	simulation/run_simulation.c	\
+	simulation/simulation_util_funcs.c	\
 	monitor/monitor.c	\
 	coders/coders.c		\
 	coders/coder_routine.c	\

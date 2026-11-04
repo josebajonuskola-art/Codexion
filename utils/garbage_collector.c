@@ -20,10 +20,8 @@
 // to be released.
 void	sim_garbage_collector(t_simulation *simulation)
 {
-	//printf("Entra en el garbage\n");
 	free(simulation->coders);
 	free(simulation->dongles);
 	free(simulation->monitor);
 	free(simulation);
-	//printf("Sale del garbage collector\n");
 }
