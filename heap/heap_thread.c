@@ -21,14 +21,14 @@ void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 		&& actual_coder->n_compiles_done <= sim->config->number_of_compiles_requiered)
 	{
 		use_dongles(actual_coder);
-		sim->available_coders[sim->n_available_coders] = coder_request;
-		sim->n_available_coders++;
+		sim->avl_coders[sim->n_avl_coders] = coder_request;
+		sim->n_avl_coders++;
 
 	}
 	else
 	{
-		sim->not_available_coders[sim->n_not_available_coders] = coder_request;
-		sim->n_not_available_coders++;
+		sim->not_avl_coders[sim->n_not_avl_coders] = coder_request;
+		sim->n_not_avl_coders++;
 	}
 
 }
@@ -40,13 +40,13 @@ void	coder_runner_and_schedule_reseter(t_simulation *sim)
 	i = 0;
 
 	pthread_mutex_lock(&sim->simulation_mutex);
-	while (i < sim->n_available_coders)
-		sim->available_coders[i++].coder->can_process = 1;
+	while (i < sim->n_avl_coders)
+		sim->avl_coders[i++].coder->can_process = 1;
 	i = 0;
-	while (i < sim->n_not_available_coders)
-		heap_push(sim, sim->not_available_coders[i++]);
-	sim->n_available_coders = 0;
-	sim->n_not_available_coders = 0;
+	while (i < sim->n_not_avl_coders)
+		heap_push(sim, sim->not_avl_coders[i++]);
+	sim->n_avl_coders = 0;
+	sim->n_not_avl_coders = 0;
 	pthread_mutex_unlock(&sim->simulation_mutex);
 }
 

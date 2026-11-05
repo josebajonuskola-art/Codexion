@@ -18,10 +18,24 @@
 // The 'simulation' pointer references the simulation structure,
 // allowing all dynamically allocated resources associated with it
 // to be released.
-void	sim_garbage_collector(t_simulation *simulation)
+void	garbage_collector(t_simulation *simulation)
 {
-	free(simulation->coders);
-	free(simulation->dongles);
-	free(simulation->monitor);
-	free(simulation);
+	if (simulation->avl_coders)
+		free(simulation->avl_coders);
+	if (simulation->not_avl_coders)
+		free(simulation->not_avl_coders);
+	if (simulation->coders)
+		free(simulation->coders);
+	if (simulation->dongles)
+		free(simulation->dongles);
+	if (simulation->monitor)
+		free(simulation->monitor);
+	if (simulation->heap)
+		free(simulation->heap);
+	if (simulation->heap->requests)
+		free(simulation->heap->requests);
+	if (simulation->heap_sorter)
+		free(simulation->heap_sorter);
+	if (simulation)
+		free(simulation);
 }

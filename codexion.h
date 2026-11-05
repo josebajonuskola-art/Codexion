@@ -117,8 +117,8 @@ typedef struct s_heap_sorter
 typedef struct s_simulation
 {
 	int is_finished;
-	int n_available_coders;
-	int n_not_available_coders;
+	int n_avl_coders;
+	int n_not_avl_coders;
 	long long start_time;
 
 	t_coder *coders;
@@ -138,8 +138,8 @@ typedef struct s_simulation
 
 	t_heap_sorter *heap_sorter;
 
-	t_request *available_coders;
-	t_request *not_available_coders;
+	t_request *avl_coders;
+	t_request *not_avl_coders;
 
 	pthread_mutex_t print_mutex;
 	pthread_mutex_t simulation_mutex;
@@ -175,6 +175,7 @@ int start_to_refactor(t_simulation *sim, t_coder *coder);
 int coder_process(t_simulation *sim, t_coder *coder);
 int usable_dongle(t_simulation *sim, t_dongle *dongle);
 int usable_dongles(t_simulation *sim, t_coder *coder);
+t_simulation *simulation_mutex_initer(t_simulation *sim);
 
 long long init_threads(t_simulation *simulation);
 long long get_smaller_time(t_simulation *sim, t_coder *coder);
@@ -192,6 +193,8 @@ void wake_up_coders(t_simulation *sim);
 void usage_info_printer(void);
 void bigger_than_0_message(void);
 void coder_runner_and_schedule_reseter(t_simulation *sim);
+void coder_pattern_factory(t_simulation *sim, int i);
+int simulation_pattern_factory(t_simulation *sim, t_config *config);
 
 void heap_push(t_simulation *sim, t_request request);
 void heap_add_fifo(t_simulation *sim, t_request request);
@@ -200,12 +203,12 @@ void heapify_up(t_simulation *sim, t_heap *heap);
 void heapify_down(t_simulation *sim);
 void swap_requests(t_simulation *sim);
 void swapper(t_request *request_top, t_request *request_bottom);
-void init_mutex_destroy(int selector, int i, t_simulation *sim);
+void mtx_destroyer(int selector, int i, t_simulation *sim);
 void *init_monitoring(void *value);
 void *init_coders_threads(void *value);
 void *init_heap_thread(void *value);
 void join_threads(t_simulation *sim);
-void sim_garbage_collector(t_simulation *simulation);
+void garbage_collector(t_simulation *simulation);
 void request_verify(t_simulation *sim, t_coder *coder);
 void run_coders(t_simulation *sim, t_coder *coder);
 void coder_request(t_simulation *sim, t_coder *coder);

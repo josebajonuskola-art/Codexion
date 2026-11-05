@@ -25,7 +25,7 @@ int	init_heap(t_simulation *sim)
 	sim->heap->capacity = sim->config->number_of_coders;
 	sim->arrival_counter = 0;
 	if (pthread_mutex_init(&sim->heap->heap_mutex, NULL) != 0)
-		init_mutex_destroy(2, 2, sim);
+		mtx_destroyer(2, 2, sim);
 	if (pthread_cond_init(&sim->heap->heap_cond, NULL) != 0)
 		pthread_cond_destroy(&sim->heap->heap_cond);
 	return (0);
