@@ -6,19 +6,11 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/29 20:41:04 by juskola-          #+#    #+#             */
-/*   Updated: 2026/07/29 20:41:33 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/05 22:52:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
-
-
-void	heap_push(t_simulation *sim, t_request request)
-{
-	sim->heap->requests[sim->heap->size] = request;
-	sim->heap->size++;
-	heapify_up(sim, sim->heap);
-}
 
 t_request	heap_pop(t_simulation *sim)
 {
@@ -29,23 +21,6 @@ t_request	heap_pop(t_simulation *sim)
 	sim->heap->size--;
 	heapify_down(sim);
 	return (first_request);
-}
-
-void	heapify_up(t_simulation *sim, t_heap *heap)
-{
-	int	parent;
-	int	i;
-
-	i = sim->heap->size - 1;
-	while (i > 0)
-	{
-		parent = (i - 1) / 2;
-		if (has_to_heapify(sim, &heap->requests[i], &heap->requests[parent]))
-			swapper(&heap->requests[i], &heap->requests[parent]);
-		else
-			break ;
-		i = parent;
-	}
 }
 
 void	heapify_down(t_simulation *sim)
@@ -74,4 +49,28 @@ void	heapify_down(t_simulation *sim)
 		swapper(&sim->heap->requests[biggest], &sim->heap->requests[i]);
 		i = biggest;
 	}
+}
+
+void	heapify_up(t_simulation *sim, t_heap *heap)
+{
+	int	parent;
+	int	i;
+
+	i = sim->heap->size - 1;
+	while (i > 0)
+	{
+		parent = (i - 1) / 2;
+		if (has_to_heapify(sim, &heap->requests[i], &heap->requests[parent]))
+			swapper(&heap->requests[i], &heap->requests[parent]);
+		else
+			break ;
+		i = parent;
+	}
+}
+
+void	heap_push(t_simulation *sim, t_request request)
+{
+	sim->heap->requests[sim->heap->size] = request;
+	sim->heap->size++;
+	heapify_up(sim, sim->heap);
 }

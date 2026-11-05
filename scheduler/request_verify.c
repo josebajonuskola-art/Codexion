@@ -12,26 +12,6 @@
 
 #include "../codexion.h"
 
-long long get_smaller_time(t_simulation *sim, t_coder *coder)
-{
-	long long actual_time;
-	long long right_dongles_time;
-	long long left_dongles_time;
-
-
-	actual_time = get_time_ms();
-	right_dongles_time = sim->config->dongle_cooldown
-		- (actual_time - coder->right_dongle->cooldown_starting_time)
-		+ actual_time;
-	left_dongles_time = sim->config->dongle_cooldown
-		- (actual_time - coder->left_dongle->cooldown_starting_time)
-		+ actual_time;
-	if (right_dongles_time > left_dongles_time)
-		return (right_dongles_time);
-	else
-		return (left_dongles_time);
-}
-
 void	request_verify(t_simulation *sim, t_coder *coder)
 {
 	pthread_mutex_lock(&sim->heap->heap_mutex);

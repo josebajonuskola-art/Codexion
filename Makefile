@@ -31,8 +31,6 @@ SRCS =	codexion.c	\
 	coders/coders.c		\
 	coders/coder_routine.c	\
 	coders/init_coders.c	\
-	scheduler/coder_choose.c	\
-	scheduler/request_research.c	\
 	scheduler/request_verify.c	\
 	dongles/dongles.c	\
 	dongles/init_dongles.c	\

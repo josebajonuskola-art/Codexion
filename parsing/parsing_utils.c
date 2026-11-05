@@ -6,27 +6,11 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 12:34:59 by juskola-          #+#    #+#             */
-/*   Updated: 2026/07/16 13:49:05 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/05 23:15:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
-
-// This function prints the expected command-line format for
-// running the program.
-void	usage_info_printer(void)
-{
-	printf("The input should look like the next one:\n");
-	printf("./codexion 5 5000 100 100 100 1 50 fifo\n");
-}
-
-// This function prints an error message indicating that the
-// first six numeric parameters must be greater than zero.
-void	bigger_than_0_message(void)
-{
-	printf("ERROR: Numbers in the first 6 parameters");
-	printf(" must be greater than '0'\n.");
-}
 
 // This function verifies that all required configuration values
 // are greater than zero.
@@ -57,4 +41,20 @@ int	non_value_checker(t_config *config)
 		return (1);
 	}
 	return (0);
+}
+
+// This function prints an error message indicating that the
+// first six numeric parameters must be greater than zero.
+void	bigger_than_0_message(void)
+{
+	printf("ERROR: Numbers in the first 6 parameters");
+	printf(" must be greater than '0'\n.");
+}
+
+// This function prints the expected command-line format for
+// running the program.
+void	usage_info_printer(void)
+{
+	printf("The input should look like the next one:\n");
+	printf("./codexion 5 5000 100 100 100 1 50 fifo\n");
 }

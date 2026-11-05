@@ -6,12 +6,37 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:05:14 by juskola-          #+#    #+#             */
-/*   Updated: 2026/07/27 20:39:32 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/05 23:20:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../codexion.h"
+
+// This function creates and initializes a configuration structure
+// using the command-line arguments provided to the program.
+//
+// The 'argv' parameter is an array of strings containing the
+// command-line arguments used to initialize the configuration.
+t_config	*config_creator(char **argv)
+{
+	t_config	*config;
+
+	config = malloc(sizeof(t_config));
+	if (!config)
+		return (NULL);
+	config->number_of_coders = atoi(argv[1]);
+	config->time_to_burnout = atoi(argv[2]);
+	config->time_to_compile = atoi(argv[3]);
+	config->time_to_debug = atoi(argv[4]);
+	config->time_to_refactor = atoi(argv[5]);
+	config->number_of_compiles_requiered = atoi(argv[6]);
+	config->dongle_cooldown = atoi(argv[7]);
+	if (strcmp(argv[8], "fifo") == 0)
+		config->scheduler = FIFO;
+	if (strcmp(argv[8], "edf") == 0)
+		config->scheduler = EDF;
+	return (config);
+}
 
 // This function verifies that the received string contains only
 // numeric characters and does not begin with a '+' or '-' sign.
@@ -39,28 +64,6 @@ int	check_num_format(char *argv)
 		}
 		j++;
 	}
-	return (0);
-}
-
-// This function verifies that the received numeric string
-// represents a value within the range of an integer.
-//
-// The 'argv' pointer references the string containing the
-// numeric value to validate
-int	max_int_checker(char *argv)
-{
-	int		atoi_number;
-	char	*supposed_real_number;
-
-	atoi_number = atoi(argv);
-	supposed_real_number = ft_itoa(atoi_number);
-	if (strcmp(argv, supposed_real_number) != 0)
-	{
-		printf("ERROR: At least a number is outside the int limits.\n");
-		free(supposed_real_number);
-		return (1);
-	}
-	free(supposed_real_number);
 	return (0);
 }
 
@@ -101,28 +104,24 @@ int	check_values(char **argv)
 	return (0);
 }
 
-// This function creates and initializes a configuration structure
-// using the command-line arguments provided to the program.
+// This function verifies that the received numeric string
+// represents a value within the range of an integer.
 //
-// The 'argv' parameter is an array of strings containing the
-// command-line arguments used to initialize the configuration.
-t_config	*config_creator(char **argv)
+// The 'argv' pointer references the string containing the
+// numeric value to validate
+int	max_int_checker(char *argv)
 {
-	t_config	*config;
+	int		atoi_number;
+	char	*supposed_real_number;
 
-	config = malloc(sizeof(t_config));
-	if (!config)
-		return (NULL);
-	config->number_of_coders = atoi(argv[1]);
-	config->time_to_burnout = atoi(argv[2]);
-	config->time_to_compile = atoi(argv[3]);
-	config->time_to_debug = atoi(argv[4]);
-	config->time_to_refactor = atoi(argv[5]);
-	config->number_of_compiles_requiered = atoi(argv[6]);
-	config->dongle_cooldown = atoi(argv[7]);
-	if (strcmp(argv[8], "fifo") == 0)
-		config->scheduler = FIFO;
-	if (strcmp(argv[8], "edf") == 0)
-		config->scheduler = EDF;
-	return (config);
+	atoi_number = atoi(argv);
+	supposed_real_number = ft_itoa(atoi_number);
+	if (strcmp(argv, supposed_real_number) != 0)
+	{
+		printf("ERROR: At least a number is outside the int limits.\n");
+		free(supposed_real_number);
+		return (1);
+	}
+	free(supposed_real_number);
+	return (0);
 }

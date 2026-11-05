@@ -6,18 +6,47 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/17 17:02:55 by juskola-          #+#    #+#             */
-/*   Updated: 2026/07/24 19:16:55 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/05 23:10:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
+
+// This function runs the monitor thread. The monitor checks whether
+// any coder has burned out and stops the simulation if that happens.
+//
+// The 'value' parameter is a pointer to the simulation structure.
+void	*init_monitoring(void *value)
+{
+	t_simulation	*sim;
+	int				i;
+
+	sim = (t_simulation *)value;
+	while (sim_is_finished(sim) != 1)
+	{
+		usleep(1000);
+		i = 0;
+		while (i < sim->config->number_of_coders)
+		{
+			if (check_burnout(sim, i) == 1 || check_compiles_done(sim) == 1)
+			{
+				pthread_mutex_lock(&sim->simulation_mutex);
+				sim->is_finished = 1;
+				pthread_mutex_unlock(&sim->simulation_mutex);
+				return (NULL);
+			}
+			i++;
+		}
+	}
+	wake_up_coders(sim);
+	return (NULL);
+}
 
 void	wake_up_coders(t_simulation *sim)
 {
 	pthread_mutex_lock(&sim->heap->heap_mutex);
 	pthread_cond_broadcast(&sim->heap->heap_cond);
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
-	
 }
 
 int	check_burnout(t_simulation *sim, int coder)
@@ -42,7 +71,7 @@ int	check_burnout(t_simulation *sim, int coder)
 
 int	check_compiles_done(t_simulation *sim)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < sim->config->number_of_coders)
@@ -58,34 +87,4 @@ int	check_compiles_done(t_simulation *sim)
 		i++;
 	}
 	return (1);
-}
-
-// This function runs the monitor thread. The monitor checks whether
-// any coder has burned out and stops the simulation if that happens.
-//
-// The 'value' parameter is a pointer to the simulation structure.
-void	*init_monitoring(void *value)
-{
-	t_simulation	*sim;
-	int				i;
-
-	sim = (t_simulation *)value;
-	while (sim_is_finished(sim) != 1)
-	{
-		usleep(1000);
-		i = 0;
-		while (i < sim->config->number_of_coders)
-		{
-			if (check_burnout(sim, i) == 1  || check_compiles_done(sim) == 1 )
-			{
-				pthread_mutex_lock(&sim->simulation_mutex);
-				sim->is_finished = 1;
-				pthread_mutex_unlock(&sim->simulation_mutex);
-				return (NULL);
-			}
-			i++;
-		}
-	}
-	wake_up_coders(sim);
-	return (NULL);
 }

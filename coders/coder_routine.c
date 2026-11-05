@@ -12,8 +12,20 @@
 
 #include "../codexion.h"
 
-// Ive moved the heap pop from start_to_refactor to start_to_compile
+int	coder_process(t_simulation *sim, t_coder *coder)
+{
 
+	if (start_to_compile(sim, coder) == 1)
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+	if (coder->n_compiles_done == sim->config->number_of_compiles_requiered)
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+	if (start_to_debug(sim, coder) == 1)
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+	if (start_to_refactor(sim, coder) == 1)
+		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+	/* pthread_mutex_unlock(&coder->coder_mutex); */
+	return (0);
+}
 int	start_to_compile(t_simulation *sim, t_coder *coder)
 {
 	if (sim_is_finished(sim) == 1)
@@ -80,17 +92,3 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	return (0);
 }
 
-int	coder_process(t_simulation *sim, t_coder *coder)
-{
-
-	if (start_to_compile(sim, coder) == 1)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
-	if (coder->n_compiles_done == sim->config->number_of_compiles_requiered)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
-	if (start_to_debug(sim, coder) == 1)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
-	if (start_to_refactor(sim, coder) == 1)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
-	/* pthread_mutex_unlock(&coder->coder_mutex); */
-	return (0);
-}

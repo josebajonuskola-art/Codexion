@@ -12,6 +12,15 @@
 
 #include "../codexion.h"
 
+void	*init_coders_threads(void *value)
+{
+	t_coder	*coder;
+
+	coder = (t_coder *)value;
+	run_coders(coder->sim, coder);
+	return (NULL);
+}
+
 void	run_coders(t_simulation *sim, t_coder *coder)
 {
 
@@ -26,13 +35,4 @@ void	run_coders(t_simulation *sim, t_coder *coder)
 		if (coder_process(coder->sim, coder) == 1)
 			break ;
 	}
-}
-
-void	*init_coders_threads(void *value)
-{
-	t_coder	*coder;
-
-	coder = (t_coder *)value;
-	run_coders(coder->sim, coder);
-	return (NULL);
 }

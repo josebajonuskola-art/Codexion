@@ -6,18 +6,11 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 12:59:22 by juskola-          #+#    #+#             */
-/*   Updated: 2026/08/03 12:59:55 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/05 23:05:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
-
-int	is_heap_top(t_simulation *sim, t_coder *coder)
-{
-	if (sim->heap->requests->coder == coder)
-		return (1);
-	return (0);
-}
 
 int	has_to_heapify(t_simulation *sim,
 	t_request *request_top, t_request *request_bottom)
@@ -32,6 +25,13 @@ int	has_to_heapify(t_simulation *sim,
 		return (0);
 }
 
+int	is_heap_top(t_simulation *sim, t_coder *coder)
+{
+	if (sim->heap->requests->coder == coder)
+		return (1);
+	return (0);
+}
+
 void	swapper(t_request *request_top, t_request *request_bottom)
 {
 	t_request	temporal;
@@ -40,4 +40,3 @@ void	swapper(t_request *request_top, t_request *request_bottom)
 	*request_top = *request_bottom;
 	*request_bottom = temporal;
 }
-

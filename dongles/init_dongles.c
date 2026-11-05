@@ -21,10 +21,8 @@ int	init_dongles(t_simulation *sim)
 	int	i;
 
 	i = 0;
-	printf("Before init dongles\n");
 	while (i < sim->config->number_of_coders)
 	{
-		printf("Before2 init dongles\n");
 		sim->dongles[i].n_dongle = i;
 		sim->dongles[i].is_connected = 0;
 		sim->dongles[i].is_chilled = 0;
@@ -37,6 +35,5 @@ int	init_dongles(t_simulation *sim)
 		}
 		i++;
 	}
-	printf("After init dongles\n");
 	return (0);
 }

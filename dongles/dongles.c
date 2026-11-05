@@ -12,12 +12,10 @@
 
 #include "../codexion.h"
 
-int	usable_dongles(t_simulation *sim, t_coder *coder)
+void	use_dongles(t_coder *coder)
 {
-	if (usable_dongle(sim, coder->right_dongle) == 1
-		&& usable_dongle(sim, coder->left_dongle) == 1)
-		return (1);
-	return (0);
+	coder->right_dongle->is_connected = 1;
+	coder->left_dongle->is_connected = 1;
 }
 
 int	usable_dongle(t_simulation *sim, t_dongle *dongle)
@@ -45,10 +43,14 @@ int	usable_dongle(t_simulation *sim, t_dongle *dongle)
 	return (1);
 }
 
-void	use_dongles(t_coder *coder)
+int	usable_dongles(t_simulation *sim, t_coder *coder)
 {
-	coder->right_dongle->is_connected = 1;
-	coder->left_dongle->is_connected = 1;
+	if (usable_dongle(sim, coder->right_dongle) == 1
+		&& usable_dongle(sim, coder->left_dongle) == 1)
+		return (1);
+	return (0);
 }
+
+
 
 
