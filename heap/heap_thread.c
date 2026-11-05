@@ -38,7 +38,7 @@ void	coder_runner_and_schedule_reseter(t_simulation *sim)
 	int i;
 
 	i = 0;
-	
+
 	pthread_mutex_lock(&sim->simulation_mutex);
 	while (i < sim->n_available_coders)
 		sim->available_coders[i++].coder->can_process = 1;
@@ -69,7 +69,7 @@ void	*init_heap_thread(void *value)
 		pthread_cond_broadcast(&sim->heap->heap_cond);
 		pthread_mutex_unlock(&sim->heap->heap_mutex);
 		if (sim_is_finished(sim) == 1)
-			break;
+			break ;
 	}
 	return (NULL);
 }
