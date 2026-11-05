@@ -14,8 +14,7 @@ NAME = codexion
 
 CC = cc
 
-#I have to remove the '-g3' from the cflags
-CFLAGS = -g3 -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -pthread
 
 SRCS =	codexion.c	\
 	utils/additional_funcs.c	\
