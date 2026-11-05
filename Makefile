@@ -48,7 +48,6 @@ OBJS = $(SRCS:.c=.o)
 HEADERS = codexion.h
 
 all: $(NAME)
-	make clean
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
