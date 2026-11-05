@@ -39,10 +39,12 @@ void	garbage_collector(t_simulation *simulation)
 		free(simulation->dongles);
 	if (simulation->monitor)
 		free(simulation->monitor);
-	if (simulation->heap->requests)
-		free(simulation->heap->requests);
 	if (simulation->heap)
+	{
+		if (simulation->heap->requests)
+			free(simulation->heap->requests);
 		free(simulation->heap);
+	}
 	if (simulation->heap_sorter)
 		free(simulation->heap_sorter);
 	if (simulation)
