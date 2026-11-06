@@ -13,8 +13,8 @@
 #include "../codexion.h"
 
 // This function removes and returns the highest priority request from the top
-// of the heap (index 0), replaces it with the last element, decrements the heap size,
-// and restores the heap property using heapify_down.
+// of the heap (index 0), replaces it with the last element, decrements the
+// heap size, and restores the heap property using heapify_down.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 t_request	heap_pop(t_simulation *sim)
@@ -28,9 +28,10 @@ t_request	heap_pop(t_simulation *sim)
 	return (first_request);
 }
 
-// This function restores the min-heap property downwards starting from the root (index 0).
-// It repeatedly compares the parent node with its left and right children and swaps
-// with the smallest child if necessary until the heap order is restored.
+// This function restores the min-heap property downwards starting from the
+// root (index 0). It repeatedly compares the parent node with its left and
+// right children and swaps with the smallest child if necessary until
+// the heap order is restored.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 void	heapify_down(t_simulation *sim)
@@ -61,12 +62,14 @@ void	heapify_down(t_simulation *sim)
 	}
 }
 
-// This function restores the min-heap property upwards starting from the last element
-// in the heap. It repeatedly compares the element with its parent and swaps them if
-// required by the scheduling criteria until the proper position is found.
+// This function restores the min-heap property upwards starting
+// from the last element in the heap. It repeatedly compares the element
+// with its parent and swaps them if required by the scheduling criteria
+// until the proper position is found.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
-// The 'heap' parameter is a pointer to the heap structure containing the requests.
+// The 'heap' parameter is a pointer to the heap structure containing
+// the requests.
 void	heapify_up(t_simulation *sim, t_heap *heap)
 {
 	int	parent;

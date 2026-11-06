@@ -21,7 +21,7 @@
 void	request_verify(t_simulation *sim, t_coder *coder)
 {
 	pthread_mutex_lock(&sim->heap->heap_mutex);
-	while (coder->can_process == 0 && sim->is_finished == 0)
+	while (coder->can_process == 0 && sim_is_finished(sim) == 0)
 		pthread_cond_wait(&sim->heap->heap_cond, &sim->heap->heap_mutex);
 	coder->can_process = 0;
 	pthread_mutex_unlock(&sim->heap->heap_mutex);

@@ -37,12 +37,13 @@ void	print_heap(t_heap *heap)
 }
 
 // This function handles the thread-safe printing of a coder's current status
-// (compiling, debugging, or refactoring) as long as the simulation has not finished.
+// (compiling, debugging, or refactoring) as long as the simulation has not
+// finished.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 // The 'coder' parameter is a pointer to the coder changing state.
-// The 'status' parameter is an integer representing the current state (0 for compile,
-// 1 for debug, and 2 for refactor).
+// The 'status' parameter is an integer representing the current state
+// (0 for compile, 1 for debug, and 2 for refactor).
 void	print_process(t_simulation *sim, t_coder *coder, int status)
 {
 	pthread_mutex_lock(&sim->print_mutex);

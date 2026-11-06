@@ -14,7 +14,8 @@
 
 // This function allocates memory for the request heap and its internal array,
 // sets the initial heap size and capacity, resets the arrival counter, and
-// initializes the heap's mutex and condition variable for thread synchronization.
+// initializes the heap's mutex and condition variable for thread
+// synchronization.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 int	init_heap(t_simulation *sim)

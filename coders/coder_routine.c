@@ -13,7 +13,8 @@
 #include "../codexion.h"
 
 // This function executes the complete processing sequence for a coder, which
-// consists of compiling, checking completion status, debugging, and refactoring.
+// consists of compiling, checking completion status, debugging, and
+// refactoring.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 // The 'coder' parameter is a pointer to the coder executing the process.
@@ -33,7 +34,8 @@ int	coder_process(t_simulation *sim, t_coder *coder)
 // This function simulates the compilation phase of a coder. It updates the
 // compile timestamp, logs state changes, waits for the compilation duration,
 // releases both acquired dongles with updated cooldown start times, increments
-// the compile count, and signals the condition variable to wake waiting threads.
+// the compile count, and signals the condition variable to wake waiting
+// threads.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 // The 'coder' parameter is a pointer to the coder starting compilation.

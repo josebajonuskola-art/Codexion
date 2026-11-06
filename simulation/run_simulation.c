@@ -13,7 +13,8 @@
 #include "../codexion.h"
 
 // This function allocates memory for the monitor and heap sorter structures
-// and creates the monitor, coder, and heap sorter threads required for the simulation.
+// and creates the monitor, coder, and heap sorter threads required for the
+// simulation.
 //
 // The 'simulation' parameter is a pointer to the main simulation structure.
 long long	init_threads(t_simulation *simulation)
@@ -41,8 +42,8 @@ long long	init_threads(t_simulation *simulation)
 	return (0);
 }
 
-// This function starts the execution of the simulation by initializing all threads
-// and waiting for their completion using join_threads.
+// This function starts the execution of the simulation by initializing all
+// threads and waiting for their completion using join_threads.
 //
 // The 'simulation' parameter is a pointer to the main simulation structure.
 int	run_simulation(t_simulation *simulation)
@@ -57,7 +58,8 @@ int	run_simulation(t_simulation *simulation)
 // by calling pthread_join on each coder thread, the monitor thread, and the
 // heap sorter thread.
 //
-// The 'sim' parameter is a pointer to the simulation structure containing thread IDs.
+// The 'sim' parameter is a pointer to the simulation structure containing
+// thread IDs.
 void	join_threads(t_simulation *sim)
 {
 	int	i;

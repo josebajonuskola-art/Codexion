@@ -29,12 +29,12 @@ void	coder_pattern_factory(t_simulation *sim, int i)
 	sim->coders[i].sim = sim;
 }
 
-// This function initializes all coders in the simulation by applying the baseline
-// configuration pattern, assigning circular left dongles, and initializing each
-// coder's mutex.
+// This function initializes all coders in the simulation by applying the
+// baseline configuration pattern, assigning circular left dongles, and
+// initializing each coder's mutex.
 //
-// The 'sim' parameter is a pointer to the main simulation structure whose coders
-// are initialized.
+// The 'sim' parameter is a pointer to the main simulation structure
+// whose coders are initialized.
 int	init_coders(t_simulation *sim)
 {
 	int	i;

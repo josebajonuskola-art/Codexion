@@ -13,11 +13,13 @@
 #include "../codexion.h"
 
 // This function determines whether two request elements in the heap should be
-// swapped during heapification based on the configured scheduling algorithm (FIFO or EDF).
+// swapped during heapification based on the configured scheduling algorithm
+// (FIFO or EDF).
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
-// The 'request_top' parameter is a pointer to the upper request in the heap comparison.
-// The 'request_bottom' parameter is a pointer to the lower request in the heap comparison.
+// The 'request_top' parameter is a pointer to the upper request in the heap
+// comparison. The 'request_bottom' parameter is a pointer to the lower
+// request in the heap comparison.
 int	has_to_heapify(t_simulation *sim,
 	t_request *request_top, t_request *request_bottom)
 {
@@ -31,8 +33,8 @@ int	has_to_heapify(t_simulation *sim,
 		return (0);
 }
 
-// This function checks whether the request belonging to a given coder is currently
-// located at the top (root) of the request heap.
+// This function checks whether the request belonging to a given coder
+// is currently located at the top (root) of the request heap.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 // The 'coder' parameter is a pointer to the coder structure to check.

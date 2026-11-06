@@ -77,7 +77,8 @@ int	check_burnout(t_simulation *sim, int coder)
 	return (0);
 }
 
-// This function checks if all coders have completed the required number of compiles.
+// This function checks if all coders have completed the required
+// number of compiles.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 int	check_compiles_done(t_simulation *sim)

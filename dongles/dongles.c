@@ -22,9 +22,9 @@ void	use_dongles(t_coder *coder)
 	coder->left_dongle->is_connected = 1;
 }
 
-// This function checks whether a specific dongle is available for use. It verifies
-// if the cooldown time has elapsed, updates the is_chilled status accordingly,
-// and ensures the dongle is not already connected.
+// This function checks whether a specific dongle is available for use.
+// It verifies if the cooldown time has elapsed, updates the is_chilled
+// status accordingly, and ensures the dongle is not already connected.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
 // The 'dongle' parameter is a pointer to the dongle structure being evaluated.
@@ -53,11 +53,12 @@ int	usable_dongle(t_simulation *sim, t_dongle *dongle)
 	return (1);
 }
 
-// This function checks whether both the right and left dongles required by a coder
-// are currently usable.
+// This function checks whether both the right and left dongles
+// required by a coder are currently usable.
 //
 // The 'sim' parameter is a pointer to the main simulation structure.
-// The 'coder' parameter is a pointer to the coder structure requesting the dongles.
+// The 'coder' parameter is a pointer to the coder structure
+// requesting the dongles.
 int	usable_dongles(t_simulation *sim, t_coder *coder)
 {
 	if (usable_dongle(sim, coder->right_dongle) == 1

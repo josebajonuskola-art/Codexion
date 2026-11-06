@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../codexion.h"
 
 // This function frees all memory allocated for the simulation.

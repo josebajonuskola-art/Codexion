@@ -90,9 +90,8 @@ int	check_values(char **argv)
 	{
 		if (check_num_format(argv[i]) == 1)
 			return (1);
-		if (max_int_checker(argv[i]) == 1)
+		if (max_int_checker(argv[i++]) == 1)
 			return (1);
-		i++;
 	}
 	if (strcmp(argv[8], "fifo") != 0
 		&& strcmp(argv[8], "edf") != 0)
