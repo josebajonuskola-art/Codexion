@@ -6,26 +6,37 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 17:55:03 by juskola-          #+#    #+#             */
-/*   Updated: 2026/07/30 13:29:11 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 17:45:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
+// This function executes the complete processing sequence for a coder, which
+// consists of compiling, checking completion status, debugging, and refactoring.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder' parameter is a pointer to the coder executing the process.
 int	coder_process(t_simulation *sim, t_coder *coder)
 {
-
 	if (start_to_compile(sim, coder) == 1)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+		return (1);
 	if (coder->n_compiles_done == sim->config->number_of_compiles_requiered)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+		return (1);
 	if (start_to_debug(sim, coder) == 1)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
+		return (1);
 	if (start_to_refactor(sim, coder) == 1)
-		return (/* pthread_mutex_unlock(&coder->coder_mutex), */ 1);
-	/* pthread_mutex_unlock(&coder->coder_mutex); */
+		return (1);
 	return (0);
 }
+
+// This function simulates the compilation phase of a coder. It updates the
+// compile timestamp, logs state changes, waits for the compilation duration,
+// releases both acquired dongles with updated cooldown start times, increments
+// the compile count, and signals the condition variable to wake waiting threads.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder' parameter is a pointer to the coder starting compilation.
 int	start_to_compile(t_simulation *sim, t_coder *coder)
 {
 	if (sim_is_finished(sim) == 1)
@@ -53,6 +64,11 @@ int	start_to_compile(t_simulation *sim, t_coder *coder)
 	return (0);
 }
 
+// This function simulates the debugging phase of a coder. It logs the state,
+// waits for the configured debug time, and updates the coder's current step.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder' parameter is a pointer to the coder debugging.
 int	start_to_debug(t_simulation *sim, t_coder *coder)
 {
 	if (sim_is_finished(sim) == 1)
@@ -65,10 +81,17 @@ int	start_to_debug(t_simulation *sim, t_coder *coder)
 	return (0);
 }
 
+// This function simulates the refactoring phase of a coder. It logs the state,
+// waits for the refactoring duration, updates the coder's step, and if the
+// compilation target has not been reached, constructs and pushes a new request
+// into the heap.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder' parameter is a pointer to the coder refactoring.
 int	start_to_refactor(t_simulation *sim, t_coder *coder)
 {
 	t_request	last_request;
-	t_coder *actual_coder;
+	t_coder		*actual_coder;
 
 	actual_coder = coder;
 	if (sim_is_finished(sim) == 1)
@@ -91,4 +114,3 @@ int	start_to_refactor(t_simulation *sim, t_coder *coder)
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 	return (0);
 }
-

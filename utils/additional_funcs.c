@@ -12,6 +12,12 @@
 
 #include "../codexion.h"
 
+// This function converts the initial portion of the string pointed to
+// by 'str' to an integer representation, discarding initial whitespace
+// characters and handling optional '+' or '-' signs.
+//
+// The 'str' parameter is a pointer to the null-terminated string to be
+// converted.
 int	ft_atoi(const char *str)
 {
 	int	i;

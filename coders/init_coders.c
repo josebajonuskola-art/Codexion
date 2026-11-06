@@ -6,13 +6,19 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/05 16:39:40 by juskola-          #+#    #+#             */
-/*   Updated: 2026/11/05 16:39:56 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 17:35:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
-void coder_pattern_factory(t_simulation *sim, int i)
+// This function sets default baseline values for a coder at the given index,
+// initializing its ID, compilation count, timestamp, execution flags, right
+// dongle pointer, and simulation reference.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'i' parameter is the integer index of the coder being initialized.
+void	coder_pattern_factory(t_simulation *sim, int i)
 {
 	sim->coders[i].n_coder = i + 1;
 	sim->coders[i].n_compiles_done = 0;
@@ -23,11 +29,12 @@ void coder_pattern_factory(t_simulation *sim, int i)
 	sim->coders[i].sim = sim;
 }
 
-
-// This function initializes all coders in the simulation.
+// This function initializes all coders in the simulation by applying the baseline
+// configuration pattern, assigning circular left dongles, and initializing each
+// coder's mutex.
 //
-// The 'sim' pointer references the simulation structure whose
-// coder fields are initialized.
+// The 'sim' parameter is a pointer to the main simulation structure whose coders
+// are initialized.
 int	init_coders(t_simulation *sim)
 {
 	int	i;
@@ -35,7 +42,6 @@ int	init_coders(t_simulation *sim)
 	i = 0;
 	while (i < sim->config->number_of_coders)
 	{
-
 		coder_pattern_factory(sim, i);
 		if (sim->config->number_of_coders == 1)
 			sim->coders[i].left_dongle = &sim->dongles[i + 1];

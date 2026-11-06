@@ -6,7 +6,7 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:40:21 by juskola-          #+#    #+#             */
-/*   Updated: 2026/11/05 23:35:00 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 16:20:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // It also ensures all the memory is alloqued correctly. If any 'malloc'
 // fails, de allocated memory is freed using 'free'.
 //
-// The 'config' pointer references to the parameters we receive in the
+// The 'config' parameter references to the parameters we receive in the
 // program before running it up.
 t_simulation	*sim_creator(t_config *config)
 {
@@ -40,6 +40,11 @@ t_simulation	*sim_creator(t_config *config)
 	return (sim);
 }
 
+// This function allocates and initializes the internal structures and arrays
+// required for the simulation instance based on the configuration parameters.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'config' parameter is a pointer to the configuration structure.
 int	simulation_pattern_factory(t_simulation *sim, t_config *config)
 {
 	sim->config = config;

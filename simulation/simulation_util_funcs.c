@@ -6,12 +6,19 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 11:59:27 by juskola-          #+#    #+#             */
-/*   Updated: 2026/11/05 23:45:00 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 16:10:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
+// This function calculates and returns the time when the next dongle
+// used by the specified coder will become available, by comparing the
+// cooldown expiration times of both the left and right dongles.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder' parameter is a pointer to the coder whose dongles are
+// being checked.
 long long	get_smaller_time(t_simulation *sim, t_coder *coder)
 {
 	long long	actual_time;
@@ -31,6 +38,9 @@ long long	get_smaller_time(t_simulation *sim, t_coder *coder)
 		return (left_dongles_time);
 }
 
+// This function retrieves the current system time in milliseconds using
+// gettimeofday. It serves as the reference clock for all time calculations
+// within the simulation.
 long long	get_time_ms(void)
 {
 	struct timeval	tv;
@@ -40,6 +50,11 @@ long long	get_time_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000));
 }
 
+// This function checks whether the simulation has finished in a thread-safe
+// manner by locking the simulation mutex before reading the 'is_finished' flag.
+//
+// The 'sim' parameter is a pointer to the simulation structure containing
+// the mutex and the termination flag.
 int	sim_is_finished(t_simulation *sim)
 {
 	int	is_finished;

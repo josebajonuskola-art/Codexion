@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   heap_thread.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juskola- <juskola-@student.42urduliz.      +#+  +:+       +#+        */
+/*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 17:58:40 by juskola-          #+#    #+#             */
-/*   Updated: 2026/11/05 22:55:00 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 17:15:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
+// This function runs the heap dispatcher thread. It periodically pops all
+// pending requests from the heap, checks resource availability, delegates
+// scheduling decisions, and broadcasts condition updates to waiting coders.
+//
+// The 'value' parameter is a void pointer to the main simulation structure.
 void	*init_heap_thread(void *value)
 {
 	t_simulation	*sim;
@@ -36,6 +41,12 @@ void	*init_heap_thread(void *value)
 	return (NULL);
 }
 
+// This function evaluates whether a coder request can proceed based on dongle
+// availability and completion limits. It classifies the request into either
+// the available or not-available request array.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder_request' parameter is the request structure being evaluated.
 void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 {
 	t_coder	*actual_coder;
@@ -55,6 +66,10 @@ void	available_or_not_scheduler(t_simulation *sim, t_request coder_request)
 	}
 }
 
+// This function authorizes available coders to proceed, re-inserts unfulfilled
+// requests back into the heap, and resets the simulation's temporary queues.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
 void	coder_runner_and_schedule_reseter(t_simulation *sim)
 {
 	int	i;

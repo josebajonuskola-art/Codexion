@@ -6,17 +6,16 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/17 11:13:03 by juskola-          #+#    #+#             */
-/*   Updated: 2026/11/05 23:40:00 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 16:15:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
-// This function creates the monitor and coder threads, then waits
-// for all of them to finish by joining them.
+// This function allocates memory for the monitor and heap sorter structures
+// and creates the monitor, coder, and heap sorter threads required for the simulation.
 //
-// The 'simulation' pointer references the simulation structure
-// used to create and manage the threads.
+// The 'simulation' parameter is a pointer to the main simulation structure.
 long long	init_threads(t_simulation *simulation)
 {
 	int	i;
@@ -30,31 +29,22 @@ long long	init_threads(t_simulation *simulation)
 	{
 		if (pthread_create(&simulation->coders[i].coder_thread, NULL,
 				init_coders_threads, &simulation->coders[i]) != 0)
-		{
-			//printf("Mini error\n");
 			return (1);
-		}
-		//printf("Termina el coder %d\n", i);
 		i++;
 	}
 	simulation->heap_sorter = malloc(sizeof(t_heap_sorter));
 	if (!simulation->heap_sorter)
 		return (free(simulation), 1);
-	//printf("Before initing heap_thread\n");
 	if (pthread_create(&simulation->heap_sorter->heap_sorter_thread, NULL,
 			init_heap_thread, simulation) != 0)
 		return (1);
-/*  while (i--)
-        pthread_join(simulation->coders[i].coder_thread, NULL);
-    pthread_join(simulation->monitor->monitor_thread, NULL); */
 	return (0);
 }
 
-// This function starts and runs the simulation, ensuring that the
-// required threads are created successfully.
+// This function starts the execution of the simulation by initializing all threads
+// and waiting for their completion using join_threads.
 //
-// The 'simulation' pointer references the simulation structure
-// used to create and manage the threads.
+// The 'simulation' parameter is a pointer to the main simulation structure.
 int	run_simulation(t_simulation *simulation)
 {
 	if (init_threads(simulation) == 1)
@@ -63,6 +53,11 @@ int	run_simulation(t_simulation *simulation)
 	return (0);
 }
 
+// This function waits for all active threads in the simulation to complete
+// by calling pthread_join on each coder thread, the monitor thread, and the
+// heap sorter thread.
+//
+// The 'sim' parameter is a pointer to the simulation structure containing thread IDs.
 void	join_threads(t_simulation *sim)
 {
 	int	i;

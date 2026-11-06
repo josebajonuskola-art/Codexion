@@ -6,7 +6,7 @@
 /*   By: juskola- <juskola-@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/17 17:02:55 by juskola-          #+#    #+#             */
-/*   Updated: 2026/11/05 23:10:00 by juskola-         ###   ########.fr       */
+/*   Updated: 2026/11/06 16:45:00 by juskola-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ void	*init_monitoring(void *value)
 	return (NULL);
 }
 
+// This function broadcasts a signal to the condition variable of the heap
+// to wake up any coder threads that might be waiting.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
 void	wake_up_coders(t_simulation *sim)
 {
 	pthread_mutex_lock(&sim->heap->heap_mutex);
@@ -49,6 +53,10 @@ void	wake_up_coders(t_simulation *sim)
 	pthread_mutex_unlock(&sim->heap->heap_mutex);
 }
 
+// This function checks whether a specific coder has exceeded the burnout limit.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
+// The 'coder' parameter is the index of the coder to check.
 int	check_burnout(t_simulation *sim, int coder)
 {
 	long long	actual_time;
@@ -69,6 +77,9 @@ int	check_burnout(t_simulation *sim, int coder)
 	return (0);
 }
 
+// This function checks if all coders have completed the required number of compiles.
+//
+// The 'sim' parameter is a pointer to the main simulation structure.
 int	check_compiles_done(t_simulation *sim)
 {
 	int	i;
