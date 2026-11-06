@@ -20,15 +20,6 @@
 // to be released.
 void	garbage_collector(t_simulation *simulation)
 {
-/* 	int i;
-
-	i = 0;
-	if (simulation->avl_coders)
-	{
-		while (&simulation->avl_coders[i] != NULL)
-			free(&simulation->avl_coders[i++]);
-		free(simulation->avl_coders);
-	} */
 	if (simulation->avl_coders)
 		free(simulation->avl_coders);
 	if (simulation->not_avl_coders)

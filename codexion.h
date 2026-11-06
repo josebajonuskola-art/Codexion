@@ -12,147 +12,132 @@
 
 #ifndef CODEXION_H
 #define CODEXION_H
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+# include <unistd.h>
 
-#include <pthread.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+/* Forward Declarations */
+typedef enum e_scheduler_type	t_scheduler_type;
+typedef struct s_coder			t_coder;
+typedef struct s_config			t_config;
+typedef struct s_dongle			t_dongle;
+typedef struct s_heap			t_heap;
+typedef struct s_heap_sorter	t_heap_sorter;
+typedef struct s_monitor		t_monitor;
+typedef struct s_request		t_request;
+typedef struct s_simulation		t_simulation;
 
-// structs and enums
-typedef enum e_scheduler_type t_scheduler_type;
-typedef struct s_config t_config;
-typedef struct s_coder t_coder;
-typedef struct s_dongle t_dongle;
-typedef struct s_simulation t_simulation;
-typedef struct s_monitor t_monitor;
-
-// scheduler policies
+/* Enums */
 typedef enum e_scheduler_type
 {
-	FIFO,
-	EDF
+	EDF,
+	FIFO
+}	t_scheduler_type;
 
-} t_scheduler_type;
+/* Structs */
 
-// typedef struct
-typedef struct s_request
+typedef struct s_coder
 {
-	t_coder *coder;
-	int arrival_number;
-	long long time_remaining;
+	int				actual_step;
+	int				can_process;
+	int				n_coder;
+	int				n_compiles_done;
 
-} t_request;
+	long long		last_compile;
+
+	t_dongle		*left_dongle;
+	t_dongle		*right_dongle;
+
+	t_simulation	*sim;
+
+	pthread_mutex_t	coder_mutex;
+	pthread_t		coder_thread;
+}	t_coder;
+
+typedef struct s_config
+{
+	int					number_of_coders;
+	int					number_of_compiles_requiered;
+
+	long long			dongle_cooldown;
+	long long			time_to_burnout;
+	long long			time_to_compile;
+	long long			time_to_debug;
+	long long			time_to_refactor;
+
+	t_scheduler_type	scheduler;
+}	t_config;
+
+typedef struct s_dongle
+{
+	int				is_chilled;
+	int				is_connected;
+	int				n_dongle;
+
+	long long		cooldown_starting_time;
+
+	t_coder			*user;
+
+	pthread_mutex_t	dongle_mutex;
+}	t_dongle;
 
 typedef struct s_heap
 {
-	t_request *requests;
-	int size;
-	int capacity;
-	pthread_mutex_t heap_mutex;
-	pthread_cond_t heap_cond;
-	pthread_t heap_sorter_thread;
-} t_heap;
+	int				capacity;
+	int				size;
 
-// configuration
-typedef struct s_config
-{
-	long long time_to_burnout;
-	long long time_to_compile;
-	long long time_to_debug;
-	long long time_to_refactor;
-	long long dongle_cooldown;
+	t_request		*requests;
 
-	int number_of_coders;
-	int number_of_compiles_requiered;
-
-	t_scheduler_type scheduler;
-
-} t_config;
-
-// the struct used for coders
-typedef struct s_coder
-{
-	int n_coder;
-	int n_compiles_done;
-	int actual_step;
-	int can_process;
-
-	long long last_compile;
-
-	t_dongle *right_dongle;
-	t_dongle *left_dongle;
-
-	pthread_mutex_t coder_mutex;
-
-	pthread_t coder_thread;
-
-	t_simulation *sim;
-
-} t_coder;
-
-// the struct used for the dongles
-//  Still have to check if the t_coder *coder data is used in the program or not,
-//  if the data is not used, it must be deleted.
-typedef struct s_dongle
-{
-	int n_dongle;
-	int is_connected;
-	int is_chilled;
-
-	long long cooldown_starting_time;
-
-	t_coder *user;
-
-	pthread_mutex_t dongle_mutex;
-} t_dongle;
+	pthread_cond_t	heap_cond;
+	pthread_mutex_t	heap_mutex;
+	pthread_t		heap_sorter_thread;
+}	t_heap;
 
 typedef struct s_heap_sorter
 {
-	pthread_t heap_sorter_thread;
-} t_heap_sorter;
+	pthread_t	heap_sorter_thread;
+}	t_heap_sorter;
 
-// the struct used fot the simulation
-typedef struct s_simulation
-{
-	int is_finished;
-	int n_avl_coders;
-	int n_not_avl_coders;
-	long long start_time;
-
-	t_coder *coders;
-
-	t_dongle *dongles;
-
-	t_config *config;
-
-	t_heap *heap;
-
-	int arrival_counter;
-
-	// tengo que crear un struct que sea el scheduler. que no se me
-	// olvide inicializarlo en simulation/init_simulation.c
-
-	t_monitor *monitor;
-
-	t_heap_sorter *heap_sorter;
-
-	t_request *avl_coders;
-	t_request *not_avl_coders;
-
-	pthread_mutex_t print_mutex;
-	pthread_mutex_t simulation_mutex;
-
-} t_simulation;
-
-// the struct used for the monitor
 typedef struct s_monitor
 {
-	pthread_t monitor_thread;
-} t_monitor;
+	pthread_t	monitor_thread;
+}	t_monitor;
 
-// used functions
+typedef struct s_request
+{
+	int			arrival_number;
+
+	long long	time_remaining;
+
+	t_coder		*coder;
+}	t_request;
+
+typedef struct s_simulation
+{
+	int				arrival_counter;
+	int				is_finished;
+	int				n_avl_coders;
+	int				n_not_avl_coders;
+
+	long long		start_time;
+
+	t_coder			*coders;
+	t_config		*config;
+	t_dongle		*dongles;
+	t_heap			*heap;
+	t_heap_sorter	*heap_sorter;
+	t_monitor		*monitor;
+	t_request		*avl_coders;
+	t_request		*not_avl_coders;
+
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	simulation_mutex;
+}	t_simulation;
+
+/* Functions */
 
 /* coders/coder_routine.c */
 int	coder_process(t_simulation *sim, t_coder *coder);
